@@ -7,9 +7,11 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from 'react-native';
 import MapView, { Marker, Polygon } from "react-native-maps";
+import { scale, verticalScale } from "../userControl/Scale";
 const win = Dimensions.get("window");
+var IconLocation = scale(50);
 const LATITUDEDELTA = 0.5;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
 export default class Map extends Component {
@@ -71,6 +73,10 @@ export default class Map extends Component {
           title={marker.name}
           key={i}
         >
+          <Image
+            source={require('../../images/iconMarker.png')}
+            style={{ height: IconLocation, width: IconLocation }}
+          />
         </Marker>
       )
       )
