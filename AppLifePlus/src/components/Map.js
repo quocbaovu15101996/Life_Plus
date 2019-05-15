@@ -77,9 +77,9 @@ export default class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity style={{ height: 50, width: '100%', backgroundColor: 'white' }} onPress={() => this.apiList('bò')}>
+        {/* <TouchableOpacity style={{ height: 50, width: '100%', backgroundColor: 'white' }} onPress={() => this.apiList('bò')}>
 
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <MapView
           style={{ flex: 1 }}
           region={{
