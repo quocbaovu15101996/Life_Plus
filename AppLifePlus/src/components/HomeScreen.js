@@ -18,10 +18,10 @@ export default class HomeScreen extends Component {
                 </View>
                 <View style={styles.viewBody}>
                     <View style={styles.viewSearch}>
-                        <View style={{flex: 8.5, backgroundColor: 'red'}}>
+                        <View style={{ flex: 8.5, backgroundColor: 'red' }}>
                             <TextInput />
                         </View>
-                        <TouchableOpacity style={{flex: 1.5, backgroundColor: 'green', borderTopRightRadius: scale(30), borderBottomRightRadius: scale(30)}}>
+                        <TouchableOpacity style={{ flex: 1.5, backgroundColor: 'green', borderTopRightRadius: scale(30), borderBottomRightRadius: scale(30) }}>
 
                         </TouchableOpacity>
                     </View>
