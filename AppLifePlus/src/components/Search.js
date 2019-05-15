@@ -55,7 +55,7 @@ export default class Search extends Component {
                     <Text>"4" ket qua</Text>
                 </View>
                 <View style={{ flex: 85 }}>
-                    <Map onRef={ref => (this.child = ref)}/>
+                    <Map onRef={ref => (this.child = ref)} navigation={this.props.navigation}/>
                 </View>
 
             </View>

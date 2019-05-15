@@ -72,6 +72,9 @@ export default class Map extends Component {
           }}
           title={marker.name}
           key={i}
+          onPress={() =>
+            this.props.navigation.navigate("LocationDetail")
+          }
         >
           <Image
             source={require('../../images/iconMarker.png')}
