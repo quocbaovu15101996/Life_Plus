@@ -30,7 +30,9 @@ export default class Search extends Component {
                             }}
                             value={this.state.textTimKiem}
                         />
-                        <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}>
+                        <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
+                        onPress={() => this.child.apiList('bò')}
+                        >
                             <Image source={require('../../images/search.png')} style={{ width: 30, height: 29, backgroundColor: 'green' }} />
                         </TouchableOpacity>
                     </View>
@@ -53,7 +55,7 @@ export default class Search extends Component {
                     <Text>"4" ket qua</Text>
                 </View>
                 <View style={{ flex: 85 }}>
-                    <Map />
+                    <Map onRef={ref => (this.child = ref)}/>
                 </View>
 
             </View>

@@ -12,7 +12,7 @@ import MapView, { Marker, Polygon } from "react-native-maps";
 const win = Dimensions.get("window");
 const LATITUDEDELTA = 0.5;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
-export default class App extends Component {
+export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -24,7 +24,10 @@ export default class App extends Component {
     }
   }
   componentDidMount() {
-
+    this.props.onRef(this)
+  }
+  componentWillUnmount() {
+    this.props.onRef(undefined)
   }
   async apiList(string) {
     let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + string
