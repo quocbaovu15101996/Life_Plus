@@ -62,9 +62,7 @@ export default class Map extends Component {
   }
   renderMarker(markers) {
     if (markers.length > 0)
-      //console.log('Marker', markers)
       return markers.map((marker, i) => (
-        //console.log('Marker', marker.latitude)
         <Marker
           coordinate={{
             latitude: Number(marker.latitude),
@@ -73,9 +71,10 @@ export default class Map extends Component {
           title={marker.name}
           key={i}
           onPress={() =>
-            this.props.navigation.navigate("LocationDetail")
+            this.props.navigation.navigate("LocationDetail", {marker: marker})
           }
         >
+          {/* <Text>{marker.name}</Text> */}
           <Image
             source={require('../../images/iconMarker.png')}
             style={{ height: IconLocation, width: IconLocation }}

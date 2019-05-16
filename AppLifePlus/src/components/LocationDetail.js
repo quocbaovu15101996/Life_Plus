@@ -9,9 +9,12 @@ export default class LocationDetail extends Component {
     static navigationOptions = {
         header: null,
     };
+    componentWillMount() {
+        console.log('Marker',this.props.navigation.getParam('marker'))
+    }
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <Text>Detail Location</Text>
             </View>
         )
