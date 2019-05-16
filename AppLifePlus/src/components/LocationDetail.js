@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions, StyleSheet, TextInput, ImageBackground, ScrollView } from 'react-native';
 import { scale, verticalScale } from "../userControl/Scale";
-import MapView, { Marker, Polygon } from "react-native-maps";
-
+import MapGuide from './MapGuide';
+import MapView from 'react-native-maps';
 const win = Dimensions.get('window');
 const LATITUDEDELTA = 0.5;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
-const IconLocation = scale(50);
 export default class LocationDetail extends Component {
     constructor(props) {
         super(props)
         this.state = {
             // marker: this.props.navigation.getParam('marker')
-            positionUser: {},
         }
     }
 
@@ -20,40 +18,9 @@ export default class LocationDetail extends Component {
         header: null,
     };
     componentWillMount() {
-        console.log('Marker', this.props.navigation.getParam('marker'))
+        // console.log('Marker', this.props.navigation.getParam('marker'))
     }
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                this.setState({
-                    positionUser: position.coords,
-                    error: null,
-                });
-            },
-            (error) => this.setState({ error: error.message }),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-        );
-    }
-    renderMarkerUser(marker) {
-        if (marker.latitude != null && marker.longitude != null)
-            return (
-                <Marker
-                    coordinate={{
-                        latitude: Number(marker.latitude),
-                        longitude: Number(marker.longitude)
-                    }}
-                    title={'You here'}
-                >
-                    {/* <Text>{marker.name}</Text> */}
-                    <Image
-                        source={require('../../images/iconLocationUser.png')}
-                        style={{ height: IconLocation, width: IconLocation }}
-                    />
-                </Marker>
-            )
-        else
-            return null
-    }
+
     render() {
         let data = this.props.navigation.getParam('marker')
         return (
@@ -113,20 +80,9 @@ export default class LocationDetail extends Component {
 
                         <View style={{ width: '100%', marginTop: scale(20) }}>
                             <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
-                            <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position:'absolute', right:10 }}>Cách</Text>
+                            <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>Cách</Text>
                             <View style={{ width: '100%', height: win.height / 1.5 }}>
-                                <MapView
-                                    style={{ flex: 1 }}
-                                    region={{
-                                        latitude: 21.013377,
-                                        longitude: 105.7996593,
-                                        latitudeDelta: LATITUDEDELTA,
-                                        longitudeDelta: LONGITUDEDELTA
-                                    }}
-                                //showsUserLocation={true}
-                                >
-                                    {this.renderMarkerUser(this.state.positionUser)}
-                                </MapView>
+                                <MapGuide />
                             </View>
                         </View>
                     </View>
