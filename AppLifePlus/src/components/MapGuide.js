@@ -19,10 +19,10 @@ class MapGuide extends Component {
             concat: null,
             coords: [],
             x: 'false',
-            cordLatitude: 21.063377,
-            cordLongitude: 105.4996593,
-            desLatitude: this.props.marker.latitude,
-            desLongitude: this.props.marker.longitude,
+            // cordLatitude: 21.063377,
+            // cordLongitude: 105.4996593,
+            cordLatitude: Number(this.props.marker.latitude),
+            cordLongitude: Number(this.props.marker.longitude),
         };
 
         this.mergeLot = this.mergeLot.bind(this);
@@ -45,16 +45,20 @@ class MapGuide extends Component {
     }
     componentWillMount() {
         console.log('Marker', this.props.marker)
+        // this.setState({
+        //     cordLatitude: Number(this.props.marker.latitude),
+        //     cordLongitude: Number(this.props.marker.longitude),
+        // })
     }
     mergeLot() {
-        if (this.state.latitude != null && this.state.longitude != null && this.state.desLatitude != null && this.state.desLongitude != null) {
+        if (this.state.latitude != null && this.state.longitude != null && this.state.cordLatitude != null && this.state.cordLongitude != null) {
             let concatLot = this.state.latitude + "," + this.state.longitude
             let des = this.state.cordLatitude + "," + this.state.cordLongitude
-            console.log('des', des + concatLot)
+            // console.log('des', des + concatLot)
             this.setState({
                 concat: concatLot
             }, () => {
-                this.getDirections(concatLot, "21.063377,105.4996593");
+                this.getDirections(concatLot, des);
             });
         }
 
@@ -84,8 +88,8 @@ class MapGuide extends Component {
 
         return (
             <MapView style={styles.map} region={{
-                latitude: 21.063377,
-                longitude: 105.4996593,
+                latitude: 21.024928,
+                longitude: 105.833740,
                 latitudeDelta: LATITUDEDELTA,
                 longitudeDelta: LONGITUDEDELTA
             }}>
