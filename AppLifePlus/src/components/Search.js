@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, Picker } from 'react-native';
 import Map from './Map';
+import List from './List'
 
 export default class Search extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            textTimKiem: this.props.navigation.getParam('text')
+            textTimKiem: this.props.navigation.getParam('text'),
+            isFirstTab: true
         }
     }
     static navigationOptions = {
@@ -15,6 +17,20 @@ export default class Search extends Component {
     componentDidMount() {
 
     }
+
+    changeTab(index) {
+        switch (index) {
+          case 0:
+            this.setState({ isFirstTab: true });
+            break;
+          case 1:
+            this.setState({ isFirstTab: false });
+            break;
+          default:
+            break;
+        }
+      }
+
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -53,9 +69,26 @@ export default class Search extends Component {
                     </Picker>
 
                     <Text>"4" ket qua</Text>
+
+                    <TouchableOpacity style={{width: 30, height: 30, justifyContent: "center", alignItems: "center", 
+                    borderColor: 'gray', borderWidth: 1, marginRight: 5, marginLeft: 11,}}
+                    onPress={() => this.changeTab(0)}>
+                        <Image source={require('../../images/iconmap.png')} style={{width: 25, height: 25}} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{width: 30, height: 30, justifyContent: "center", alignItems: "center", 
+                    borderColor: 'gray', borderWidth: 1}}
+                    onPress={() => this.changeTab(1)}>
+                    <Image source={require('../../images/iconlist.png')} style={{width: 25, height: 25}} />
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 85 }}>
-                    <Map onRef={ref => (this.child = ref)} navigation={this.props.navigation}/>
+                {
+                    this.state.isFirstTab ? <Map onRef={ref => (this.child = ref)} navigation={this.props.navigation}/> :
+                    <List onRef={ref => (this.child = ref)} navigation={this.props.navigation} />
+                }
+                    
+                    
                 </View>
 
             </View>

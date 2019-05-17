@@ -32,7 +32,7 @@ export default class Map extends Component {
     this.props.onRef(undefined)
   }
   async apiList(string) {
-    let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + string
+    let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
     try {
       let response = await fetch(
         url,
@@ -48,7 +48,7 @@ export default class Map extends Component {
           markers: responseJson.Data
         })
         // alert(JSON.stringify(responseJson))
-        //alert(JSON.stringify(this.state.markers))
+        // alert(JSON.stringify(this.state.markers))
         return responseJson;
       }
       else {
