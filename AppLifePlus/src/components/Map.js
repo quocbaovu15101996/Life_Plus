@@ -47,8 +47,6 @@ export default class Map extends Component {
         this.setState({
           markers: responseJson.Data
         })
-        // alert(JSON.stringify(responseJson))
-        // alert(JSON.stringify(this.state.markers))
         return responseJson;
       }
       else {
@@ -71,7 +69,7 @@ export default class Map extends Component {
           title={marker.name}
           key={i}
           onPress={() =>
-            this.props.navigation.navigate("LocationDetail", {marker: marker})
+            this.props.navigation.navigate("LocationDetail", { id: marker.id })
           }
         >
           {/* <Text>{marker.name}</Text> */}
@@ -88,9 +86,7 @@ export default class Map extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        {/* <TouchableOpacity style={{ height: 50, width: '100%', backgroundColor: 'white' }} onPress={() => this.apiList('bò')}>
-
-        </TouchableOpacity> */}
+        <Text style={{color:'black', fontSize: scale(28), marginBottom: verticalScale(10)}}>{this.state.markers.length} kết quả</Text>
         <MapView
           style={{ flex: 1 }}
           region={{

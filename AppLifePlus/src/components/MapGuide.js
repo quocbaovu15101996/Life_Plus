@@ -24,12 +24,11 @@ class MapGuide extends Component {
             cordLatitude: Number(this.props.marker.latitude),
             cordLongitude: Number(this.props.marker.longitude),
         };
-
         this.mergeLot = this.mergeLot.bind(this);
-
     }
 
     componentDidMount() {
+        console.log('Marker', this.props.marker)
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
@@ -44,7 +43,6 @@ class MapGuide extends Component {
         );
     }
     componentWillMount() {
-        console.log('Marker', this.props.marker)
         // this.setState({
         //     cordLatitude: Number(this.props.marker.latitude),
         //     cordLongitude: Number(this.props.marker.longitude),

@@ -68,7 +68,6 @@ export default class Search extends Component {
                         <Picker.Item label="JS" value="js" />
                     </Picker>
 
-                    <Text>"4" ket qua</Text>
 
                     <TouchableOpacity style={{width: 30, height: 30, justifyContent: "center", alignItems: "center", 
                     borderColor: 'gray', borderWidth: 1, marginRight: 5, marginLeft: 11,}}
