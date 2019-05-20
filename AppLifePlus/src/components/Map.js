@@ -18,6 +18,7 @@ export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      statusBarHeight: 5,
       region: {
         latitude: 21.013377,
         longitude: 105.7996593
@@ -30,6 +31,10 @@ export default class Map extends Component {
   }
   componentWillUnmount() {
     this.props.onRef(undefined)
+  }
+  componentWillMount() {
+    // show button ShowMyLocation in Map
+    setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
   }
   async apiList(string) {
     let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
@@ -85,8 +90,8 @@ export default class Map extends Component {
   }
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <Text style={{color:'black', fontSize: scale(28), marginBottom: verticalScale(10)}}>{this.state.markers.length} kết quả</Text>
+      <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
+        <Text style={{ color: 'black', fontSize: scale(28), marginBottom: verticalScale(10) }}>{this.state.markers.length} kết quả</Text>
         <MapView
           style={{ flex: 1 }}
           region={{
@@ -96,6 +101,7 @@ export default class Map extends Component {
             longitudeDelta: LONGITUDEDELTA
           }}
           showsUserLocation={true}
+          showsMyLocationButton={true}
         >
           {this.renderMarker(this.state.markers)}
         </MapView>

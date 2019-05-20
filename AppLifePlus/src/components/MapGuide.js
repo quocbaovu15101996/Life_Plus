@@ -15,12 +15,17 @@ class MapGuide extends Component {
         super(props);
 
         this.state = {
+            statusBarHeight: 5,
             distance: 0,
             latitude: null,
             longitude: null,
             error: null,
             concat: null,
             coords: [],
+            region: {
+                latitude: 21.013377,
+                longitude: 105.7996593
+            },
             x: 'false',
             // cordLatitude: 21.063377,
             // cordLongitude: 105.4996593,
@@ -56,6 +61,7 @@ class MapGuide extends Component {
         );
     }
     componentWillMount() {
+        setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
     }
     getDistance() {
 
@@ -99,14 +105,17 @@ class MapGuide extends Component {
         return (
             <View style={{ width: '100%', marginTop: scale(20) }}>
                 <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
-                <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>Cách {this.state.distance/1000} km</Text>
-                <View style={{ width: '100%', height: win.height / 1.5 }}>
-                    <MapView style={styles.map} region={{
-                        latitude: 21.024928,
-                        longitude: 105.833740,
+                <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>Cách {this.state.distance / 1000} km</Text>
+                <View style={{ width: '100%', height: win.height / 1.5, paddingTop: this.state.statusBarHeight }}>
+                    <MapView style={{ flex: 1 }} region={{
+                        latitude: this.state.region.latitude,
+                        longitude: this.state.region.longitude,
                         latitudeDelta: LATITUDEDELTA,
                         longitudeDelta: LONGITUDEDELTA
-                    }}>
+                    }}
+                        // showsUserLocation={true}
+                        showsMyLocationButton={true}
+                    >
 
                         {!!this.state.latitude && !!this.state.longitude &&
                             <Marker
