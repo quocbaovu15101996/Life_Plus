@@ -63,7 +63,7 @@ export default class List extends Component {
     <TouchableOpacity key={item.id} style={{
         backgroundColor: 'white', width: '95%', borderBottomColor: 'lightgrey', borderBottomWidth: 1, borderRightColor: 'lightgrey', 
         borderRightWidth: 1, height: khungHeight, flexDirection: "row", marginBottom: 10
-    }} onPress={() => this.props.navigation.navigate('', { id: item.id })} >
+    }} onPress={() => this.props.navigation.navigate('LocationDetail', { id: item.id })} >
         <View style={{ flex: 35, justifyContent: "center", alignItems: "center" }} >
             <Image source={{ uri:
                 item.avatar }} style={{width: scale(150), height: scale(100)}}/>
@@ -82,6 +82,7 @@ export default class List extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <Text style={{color:'black', fontSize: scale(28), marginBottom: verticalScale(10)}}>{this.state.listData.length} kết quả</Text>
         <FlatList
             data={this.state.listData}
             keyExtractor={(item, index) => item.id.toString()}
