@@ -110,16 +110,16 @@ export default class LocationDetail extends Component {
                                 </View>
                             </View>
 
-                            <View style={{ width: '100%', marginTop: scale(20) }}>
+                            {/* <View style={{ width: '100%', marginTop: scale(20) }}>
                                 <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
                                 <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>Cách</Text>
-                                <View style={{ width: '100%', height: win.height / 1.5 }}>
+                                <View style={{ width: '100%', height: win.height / 1.5 }}> */}
                                     {data.longitude == null ? null : (
                                         <MapGuide marker={data} />
                                     )
                                     }
-                                </View>
-                            </View>
+                                {/* </View>
+                            </View> */}
                         </View>
                     </ScrollView>
                 </View>

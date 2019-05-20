@@ -87,7 +87,6 @@ export default class Search extends Component {
                     <List onRef={ref => (this.child = ref)} navigation={this.props.navigation} />
                 }
                     
-                    
                 </View>
 
             </View>
