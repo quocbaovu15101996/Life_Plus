@@ -6,7 +6,9 @@ import Provider from 'react-redux'
 export default class Main extends Component {
     render() {
         return (
-            <HomeRouters />
+            // <Provider store = {store}>
+                <HomeRouters />
+            // </Provider>
         )
     }
 }
