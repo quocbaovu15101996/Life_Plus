@@ -18,7 +18,6 @@ class Search extends Component {
     };
     componentDidMount() {
         //alert(JSON.stringify(this.props.location))
-        this.child.apiList(this.state.textTimKiem)
     }
 
     changeTab(index) {

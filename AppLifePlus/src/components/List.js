@@ -27,7 +27,6 @@ class List extends Component {
   }
   componentDidMount() {
     this.props.onRef(this)
-    alert(JSON.stringify(this.props.markers))
   }
   componentWillUnmount() {
     this.props.onRef(undefined)

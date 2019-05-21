@@ -33,6 +33,7 @@ class HomeScreen extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }
+        // this.props.store.dispatch(updateLocation(location))
         this.props.updateLocation(location);
       },
       (error) => this.setState({ error: error.message }),

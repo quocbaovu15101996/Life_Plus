@@ -91,7 +91,7 @@ export default class LocationDetail extends Component {
                                     </View>
                                 </View>
 
-                                <View style={{ flexDirection: 'row', marginTop: scale(10) }}>
+                                <View style={{ flexDirection: 'row', marginTop: scale(5) }}>
                                     <View style={{ flex: 2, height: verticalScale(70), backgroundColor: 'rgba(222, 235, 247, 0.8)', justifyContent: 'center' }}>
                                         <Text style={{ color: 'black', marginLeft: 5 }}>Loại kinh doanh</Text>
                                     </View>
@@ -100,7 +100,7 @@ export default class LocationDetail extends Component {
                                     </View>
                                 </View>
 
-                                <View style={{ flexDirection: 'row', marginTop: scale(10) }}>
+                                <View style={{ flexDirection: 'row', marginTop: scale(5) }}>
                                     <View style={{ flex: 2, height: verticalScale(70), backgroundColor: 'rgba(222, 235, 247, 0.8)', justifyContent: 'center' }}>
                                         <Text style={{ color: 'black', marginLeft: 5 }}>Mặt hàng, sản phẩm</Text>
                                     </View>
