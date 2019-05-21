@@ -21,20 +21,20 @@ export default class Search extends Component {
 
     changeTab(index) {
         switch (index) {
-          case 0:
-            this.setState({ isFirstTab: true });
-            break;
-          case 1:
-            this.setState({ isFirstTab: false });
-            break;
-          default:
-            break;
+            case 0:
+                this.setState({ isFirstTab: true });
+                break;
+            case 1:
+                this.setState({ isFirstTab: false });
+                break;
+            default:
+                break;
         }
-      }
+    }
 
     render() {
         return (
-            
+
             <View style={{ flex: 1 }}>
                 <View style={{ height: scale(80), flexDirection: "row", margin: 8 }}>
                     <Image source={require('../../images/Lifelogo.png')} style={{ width: 90, height: 38, marginRight: 5 }} />
@@ -49,13 +49,13 @@ export default class Search extends Component {
                             value={this.state.textTimKiem}
                         />
                         <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
-                        onPress={() => this.child.apiList(this.state.textTimKiem)}
+                            onPress={() => this.child.apiList(this.state.textTimKiem)}
                         >
                             <Image source={require('../../images/search.png')} style={{ width: 30, height: 29, backgroundColor: 'green' }} />
                         </TouchableOpacity>
                     </View>
                 </View>
-                {/* <KeyboardAvoidingView behavior='padding'> */}
+
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Picker
                         style={{ height: 20, width: 140 }}>
@@ -70,36 +70,51 @@ export default class Search extends Component {
                         <Picker.Item label="JS" value="js" />
                     </Picker>
 
-                    <View style={{position: "absolute", right: scale(20), flexDirection: "row"}}>
-                    <TouchableOpacity style={{width: 30, height: 30, justifyContent: "center", alignItems: "center", 
-                    backgroundColor: 'lightgrey', borderRadius: 5, marginRight: 5, marginLeft: 11,}}
-                    onPress={() => this.changeTab(0)}>
-                        {this.state.isFirstTab ? (<Image source={require('../../images/iconmap_active.png')} style={{width: 25, height: 25}} />) :
-                        (<Image source={require('../../images/iconmap.png')} style={{width: 25, height: 25}} />)
+                    <TouchableOpacity style={{
+                        width: 30, height: 30, justifyContent: "center", alignItems: "center",
+                        marginRight: 5, marginLeft: 11, borderColor: '#2ced42', borderWidth: 1
+                    }}
+                        onPress={() => this.changeTab(0)}>
+                        {
+                            this.state.isFirstTab ?
+                                (
+                                    <Image source={require('../../images/iconmap_active.png')} style={{ width: 25, height: 25 }} />
+                                )
+                                :
+                                (
+                                    <Image source={require('../../images/iconmap.png')} style={{ width: 25, height: 25 }} />
+                                )
                         }
-                        
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{width: 30, height: 30, justifyContent: "center", alignItems: "center", 
-                    backgroundColor: 'lightgrey', borderRadius: 5}}
-                    onPress={() => this.changeTab(1)}>
-                        {!this.state.isFirstTab ? (<Image source={require('../../images/iconlist_active.png')} style={{width: 25, height: 25}} />) :
-                        (<Image source={require('../../images/iconlist.png')} style={{width: 25, height: 25}} />)
+                    <TouchableOpacity style={{
+                        width: 30, height: 30, justifyContent: "center", alignItems: "center",
+                        borderColor: '#2ced42', borderWidth: 1
+                    }}
+                        onPress={() => this.changeTab(1)}>
+                        {
+                            !this.state.isFirstTab ?
+                                (
+                                    <Image source={require('../../images/iconlist_active.png')} style={{ width: 25, height: 25 }} />
+                                )
+                                :
+                                (
+                                    <Image source={require('../../images/iconlist.png')} style={{ width: 25, height: 25 }} />
+                                )
+
                         }
                     </TouchableOpacity>
-                    </View>
                 </View>
-                {/* </KeyboardAvoidingView> */}
-                <View style={{ flex: 1 }}>
-                {
-                    this.state.isFirstTab ? <Map onRef={ref => (this.child = ref)} navigation={this.props.navigation}/> :
-                    <List onRef={ref => (this.child = ref)} navigation={this.props.navigation} />
-                }
-                    
+
+                <View style={{ flex: 85 }}>
+                    {
+                        this.state.isFirstTab ? <Map onRef={ref => (this.child = ref)} navigation={this.props.navigation} /> :
+                            <List onRef={ref => (this.child = ref)} navigation={this.props.navigation} />
+                    }
+
                 </View>
 
             </View>
-            
         )
     }
 }

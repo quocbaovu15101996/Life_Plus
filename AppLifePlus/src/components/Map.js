@@ -14,16 +14,31 @@ const win = Dimensions.get("window");
 var IconLocation = scale(50);
 const LATITUDEDELTA = 0.5;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
+const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
 export default class Map extends Component {
   constructor(props) {
     super(props)
+    this.map = null;
     this.state = {
       statusBarHeight: 5,
       region: {
         latitude: 21.013377,
         longitude: 105.7996593
       },
-      markers: []
+      markers: [
+        // {
+        //   latitude: 21.013377,
+        //   longitude: 105.7996593
+        // },
+        // {
+        //   latitude: 21.023377,
+        //   longitude: 105.7996593
+        // },
+        // {
+        //   latitude: 21.013377,
+        //   longitude: 105.696593
+        // },
+      ]
     }
   }
   componentDidMount() {
@@ -88,6 +103,15 @@ export default class Map extends Component {
     else
       return null
   }
+  ZoomBounds() {
+    // let listMarker = this.state.markers;
+    // console.log(listMarker)
+    // listMarker.push()
+    // this.map.fitToCoordinates(this.state.markers, {
+    //   edgePadding: DEFAULT_PADDING,
+    //   animated: true
+    // });
+  }
   render() {
     return (
       <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
@@ -95,6 +119,9 @@ export default class Map extends Component {
           "{this.state.markers.length}" kết quả
         </Text>
         <MapView
+          ref={ref => {
+            this.map = ref;
+          }}
           style={{ flex: 1 }}
           region={{
             latitude: this.state.region.latitude,

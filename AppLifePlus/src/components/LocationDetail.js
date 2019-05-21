@@ -105,7 +105,7 @@ export default class LocationDetail extends Component {
                                         <Text style={{ color: 'black', marginLeft: 5 }}>Mặt hàng, sản phẩm</Text>
                                     </View>
                                     <View style={{ flex: 3, height: verticalScale(70), backgroundColor: 'rgba(239, 245, 251, 0.6)', justifyContent: 'center' }}>
-
+                                        <Text style={{ color: 'black', marginLeft: 5 }}>{data.selling_products_text}</Text>
                                     </View>
                                 </View>
                             </View>
