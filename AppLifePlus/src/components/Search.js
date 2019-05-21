@@ -69,7 +69,7 @@ export default class Search extends Component {
                         <Picker.Item label="JavaScript" value="java" />
                         <Picker.Item label="JS" value="js" />
                     </Picker>
-
+                    <View style={{flexDirection: "row", position: "absolute", right: scale(20)}}>
                     <TouchableOpacity style={{
                         width: 30, height: 30, justifyContent: "center", alignItems: "center",
                         marginRight: 5, marginLeft: 11, borderColor: '#2ced42', borderWidth: 1
@@ -104,6 +104,7 @@ export default class Search extends Component {
 
                         }
                     </TouchableOpacity>
+                    </View>
                 </View>
 
                 <View style={{ flex: 85 }}>
