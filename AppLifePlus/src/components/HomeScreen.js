@@ -11,6 +11,7 @@ import {
   View, TextInput, TouchableOpacity, KeyboardAvoidingView
 } from 'react-native';
 import { scale, verticalScale } from "../userControl/Scale";
+import { connect } from 'react-redux';
 
 export default class HomeScreen extends Component {
   constructor(props){
