@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import { scale, verticalScale } from "../userControl/Scale";
 import { connect } from 'react-redux';
-
-export default class HomeScreen extends Component {
-  constructor(props){
+import { updateLocation } from '../redux/actions/location';
+class HomeScreen extends Component {
+  constructor(props) {
     super(props)
     this.state = {
       textTimKiem: ''
@@ -25,6 +25,20 @@ export default class HomeScreen extends Component {
     header: null,
   };
 
+  componentDidMount() {
+    // console.log('Marker', this.props.marker)
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }
+        this.props.updateLocation(location);
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+    );
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -36,21 +50,21 @@ export default class HomeScreen extends Component {
           <Image source={require('../../images/home.png')} style={{ width: scale(180), height: scale(160), marginBottom: scale(10) }} />
           <Text style={{ fontSize: scale(40), color: 'black', marginBottom: 10 }}>Bạn cần tìm gì hôm nay?</Text>
           <KeyboardAvoidingView behavior='padding'>
-          <View style={{ flex: 1, flexDirection: 'row', width: '80%' }}>
-            <TextInput
-              style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
-              placeholder='Nhập tìm kiếm'
-              onChangeText={(text) => {
-                this.setState({ textTimKiem: text })
-              }}
-              value={this.state.textTimKiem}
-            />
-            <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
-              onPress={() => this.props.navigation.navigate('Search', {text: this.state.textTimKiem})}>
-              <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59), backgroundColor: 'green' }} />
-            </TouchableOpacity>
-          </View>
-            </KeyboardAvoidingView>
+            <View style={{ flex: 1, flexDirection: 'row', width: '80%' }}>
+              <TextInput
+                style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
+                placeholder='Nhập tìm kiếm'
+                onChangeText={(text) => {
+                  this.setState({ textTimKiem: text })
+                }}
+                value={this.state.textTimKiem}
+              />
+              <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
+                onPress={() => this.props.navigation.navigate('Search', { text: this.state.textTimKiem })}>
+                <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59), backgroundColor: 'green' }} />
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
 
         </View>
 
@@ -64,3 +78,9 @@ export default class HomeScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  location: state.location
+});
+
+export default connect(mapStateToProps, {updateLocation})(HomeScreen);
