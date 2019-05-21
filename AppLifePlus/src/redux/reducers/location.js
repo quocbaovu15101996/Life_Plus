@@ -1,8 +1,8 @@
 import { UPDATE_LOCATION } from '../actions/location';
 
-export type State = {
-  location: {},
-}
+// export type State = {
+//   location: {},
+// }
 
 const initialState = {
   location: {

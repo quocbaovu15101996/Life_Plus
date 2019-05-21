@@ -10,12 +10,14 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from 'react-native';
 import MapView, { Marker, Polygon } from "react-native-maps";
 import { scale, verticalScale } from "../userControl/Scale";
+import { connect } from 'react-redux';
+
 const win = Dimensions.get("window");
 var IconLocation = scale(50);
 const LATITUDEDELTA = 0.5;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
 const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
-export default class Map extends Component {
+class Map extends Component {
   constructor(props) {
     super(props)
     this.map = null;
@@ -51,6 +53,7 @@ export default class Map extends Component {
     // show button ShowMyLocation in Map
     setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
   }
+
   async apiList(string) {
     let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
     try {
@@ -115,7 +118,7 @@ export default class Map extends Component {
   render() {
     return (
       <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
-        <Text style={{color:'black', fontSize: scale(28), marginBottom: verticalScale(10), marginLeft: scale(10)}}>
+        <Text style={{ color: 'black', fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(10) }}>
           "{this.state.markers.length}" kết quả
         </Text>
         <MapView
@@ -132,7 +135,9 @@ export default class Map extends Component {
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
-          {this.renderMarker(this.state.markers)}
+          {
+            this.renderMarker(this.state.markers)
+          }
         </MapView>
       </View>
     );
@@ -142,3 +147,9 @@ export default class Map extends Component {
 const styles = StyleSheet.create({
 
 });
+
+const mapStateToProps = state => ({
+  markers: state.markers
+});
+
+export default connect(mapStateToProps, null)(Map);

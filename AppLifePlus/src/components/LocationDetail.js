@@ -68,12 +68,12 @@ export default class LocationDetail extends Component {
 
                             <View style={{ width: '100%', marginTop: scale(20) }}>
                                 <ImageBackground source={{ uri: data.avatar }} style={{ width: '100%', height: win.height / 2 }}>
-                                    <View style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(0,0,0,0.3)', width: '100%' }}>
+                                    <View style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(255,255,255, 0.15)', width: '100%' }}>
                                         <Text style={{ color: '#00FF7F', fontSize: scale(32), marginLeft: 10 }}>{data.shop_name}</Text>
                                         <View>
                                             <Text style={{ color: 'black', fontSize: scale(26), marginLeft: 10 }}>{data.phone_number}</Text>
                                         </View>
-                                        <View>
+                                        <View style={{marginBottom: 5}}>
                                             <Text style={{ color: 'black', fontSize: scale(26), marginLeft: 10 }}>{data.street_address}</Text>
                                         </View>
                                     </View>
@@ -105,7 +105,7 @@ export default class LocationDetail extends Component {
                                         <Text style={{ color: 'black', marginLeft: 5 }}>Mặt hàng, sản phẩm</Text>
                                     </View>
                                     <View style={{ flex: 3, height: verticalScale(70), backgroundColor: 'rgba(239, 245, 251, 0.6)', justifyContent: 'center' }}>
-                                        <Text style={{ color: 'black', marginLeft: 5 }}>{data.selling_products_text}</Text>
+                                        <Text style={{ color: 'black', marginLeft: 5 }} numberOfLines={2}>{data.selling_products_text}</Text>
                                     </View>
                                 </View>
                             </View>

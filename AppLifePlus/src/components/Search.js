@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, Picker, KeyboardAvoidingView } from 'react-native';
 import Map from './Map';
-import List from './List'
+import List from './List';
+import { connect } from 'react-redux';
 import { scale } from '../userControl/Scale';
 
-export default class Search extends Component {
+class Search extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,7 +17,8 @@ export default class Search extends Component {
         header: null,
     };
     componentDidMount() {
-
+        //alert(JSON.stringify(this.props.location))
+        this.child.apiList(this.state.textTimKiem)
     }
 
     changeTab(index) {
@@ -59,51 +61,53 @@ export default class Search extends Component {
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Picker
                         style={{ height: 20, width: 140 }}>
-                        <Picker.Item label="Duoi 3 km" value="java" />
-                        <Picker.Item label="Duoi 2 km" value="js" />
-                        <Picker.Item label="Duoi 1 km" value="js" />
+                        <Picker.Item label="Dưới 3 km" value="java" />
+                        <Picker.Item label="Dưới 2 km" value="js" />
+                        <Picker.Item label="Dưới 1 km" value="js" />
                     </Picker>
 
                     <Picker
-                        style={{ height: 20, width: 100 }}>
-                        <Picker.Item label="JavaScript" value="java" />
-                        <Picker.Item label="JS" value="js" />
+                        style={{ height: 20, width: 140 }}>
+                        <Picker.Item label="Tất cả" value="java" />
+                        <Picker.Item label="A" value="js" />
                     </Picker>
 
-                    <TouchableOpacity style={{
-                        width: 30, height: 30, justifyContent: "center", alignItems: "center",
-                        marginRight: 5, marginLeft: 11, borderColor: '#2ced42', borderWidth: 1
-                    }}
-                        onPress={() => this.changeTab(0)}>
-                        {
-                            this.state.isFirstTab ?
-                                (
-                                    <Image source={require('../../images/iconmap_active.png')} style={{ width: 25, height: 25 }} />
-                                )
-                                :
-                                (
-                                    <Image source={require('../../images/iconmap.png')} style={{ width: 25, height: 25 }} />
-                                )
-                        }
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', position: 'absolute', right: 8 }}>
+                        <TouchableOpacity style={{
+                            width: 30, height: 30, justifyContent: "center", alignItems: "center",
+                            borderColor: '#2ced42', borderWidth: 1
+                        }}
+                            onPress={() => this.changeTab(0)}>
+                            {
+                                this.state.isFirstTab ?
+                                    (
+                                        <Image source={require('../../images/iconmap_active.png')} style={{ width: 25, height: 25 }} />
+                                    )
+                                    :
+                                    (
+                                        <Image source={require('../../images/iconmap.png')} style={{ width: 25, height: 25 }} />
+                                    )
+                            }
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={{
-                        width: 30, height: 30, justifyContent: "center", alignItems: "center",
-                        borderColor: '#2ced42', borderWidth: 1
-                    }}
-                        onPress={() => this.changeTab(1)}>
-                        {
-                            !this.state.isFirstTab ?
-                                (
-                                    <Image source={require('../../images/iconlist_active.png')} style={{ width: 25, height: 25 }} />
-                                )
-                                :
-                                (
-                                    <Image source={require('../../images/iconlist.png')} style={{ width: 25, height: 25 }} />
-                                )
+                        <TouchableOpacity style={{
+                            width: 30, height: 30, justifyContent: "center", alignItems: "center",
+                            borderColor: '#2ced42', borderWidth: 1
+                        }}
+                            onPress={() => this.changeTab(1)}>
+                            {
+                                !this.state.isFirstTab ?
+                                    (
+                                        <Image source={require('../../images/iconlist_active.png')} style={{ width: 25, height: 25 }} />
+                                    )
+                                    :
+                                    (
+                                        <Image source={require('../../images/iconlist.png')} style={{ width: 25, height: 25 }} />
+                                    )
 
-                        }
-                    </TouchableOpacity>
+                            }
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <View style={{ flex: 85 }}>
@@ -118,3 +122,8 @@ export default class Search extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    location: state.location,
+});
+export default connect(mapStateToProps, null)(Search);

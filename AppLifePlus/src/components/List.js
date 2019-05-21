@@ -9,6 +9,8 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, FlatList } from 'react-native';
 import { scale, verticalScale } from "../userControl/Scale";
+import { connect } from 'react-redux';
+
 const win = Dimensions.get("window");
 
 var iconSize = scale(80)
@@ -16,7 +18,7 @@ var titleSize = scale(26)
 var textConlai = scale(22)
 var khungHeight = verticalScale(140)
 
-export default class List extends Component {
+class List extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,6 +27,7 @@ export default class List extends Component {
   }
   componentDidMount() {
     this.props.onRef(this)
+    alert(JSON.stringify(this.props.markers))
   }
   componentWillUnmount() {
     this.props.onRef(undefined)
@@ -99,3 +102,8 @@ export default class List extends Component {
 const styles = StyleSheet.create({
 
 });
+
+const mapStateToProps = state => ({
+  markers: state.markers,
+});
+export default connect(mapStateToProps, null)(List);

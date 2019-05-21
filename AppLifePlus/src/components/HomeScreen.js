@@ -13,6 +13,7 @@ import {
 import { scale, verticalScale } from "../userControl/Scale";
 import { connect } from 'react-redux';
 import { updateLocation } from '../redux/actions/location';
+import { updateMarkers } from '../redux/actions/listMarker';
 class HomeScreen extends Component {
   constructor(props) {
     super(props)
@@ -26,7 +27,6 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    // console.log('Marker', this.props.marker)
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const location = {
@@ -39,6 +39,33 @@ class HomeScreen extends Component {
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
     );
   }
+
+  async apiList(string) {
+    let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
+    try {
+      let response = await fetch(
+        url,
+        {
+          method: 'GET',
+          headers: {
+          },
+        }
+      )
+      if (response.status == "200") {
+        let responseJson = await response.json();
+        this.props.updateMarkers(responseJson.Data)
+        return responseJson;
+      }
+      else {
+        return null;
+      }
+    }
+    catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -60,7 +87,10 @@ class HomeScreen extends Component {
                 value={this.state.textTimKiem}
               />
               <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
-                onPress={() => this.props.navigation.navigate('Search', { text: this.state.textTimKiem })}>
+                onPress={() => {
+                  this.apiList(this.state.textTimKiem);
+                  this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
+                }}>
                 <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59), backgroundColor: 'green' }} />
               </TouchableOpacity>
             </View>
@@ -79,8 +109,4 @@ class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  location: state.location
-});
-
-export default connect(mapStateToProps, {updateLocation})(HomeScreen);
+export default connect(null, { updateLocation, updateMarkers })(HomeScreen);
