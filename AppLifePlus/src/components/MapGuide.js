@@ -36,7 +36,8 @@ class MapGuide extends Component {
     }
 
     componentDidMount() {
-        console.log('Marker', this.props.marker)
+        console.log('reload')
+        // console.log('Marker', this.props.marker)
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 //Tính khoảng cách
@@ -106,55 +107,57 @@ class MapGuide extends Component {
             <View style={{ width: '100%', marginTop: scale(20) }}>
                 <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
                 <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>Cách {this.state.distance / 1000} km</Text>
-                <View style={{ width: '100%', height: win.height / 1.5, paddingTop: this.state.statusBarHeight }}>
-                    <MapView style={{ flex: 1 }} region={{
-                        latitude: this.state.region.latitude,
-                        longitude: this.state.region.longitude,
-                        latitudeDelta: LATITUDEDELTA,
-                        longitudeDelta: LONGITUDEDELTA
-                    }}
-                        // showsUserLocation={true}
-                        showsMyLocationButton={true}
-                    >
+                <View style={{ width: '100%', height: win.height / 1.5 }}>
+                    <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
+                        <MapView style={{ flex: 1 }} region={{
+                            latitude: this.state.region.latitude,
+                            longitude: this.state.region.longitude,
+                            latitudeDelta: LATITUDEDELTA,
+                            longitudeDelta: LONGITUDEDELTA
+                        }}
+                            showsUserLocation={true}
+                            showsMyLocationButton={true}
+                        >
 
-                        {!!this.state.latitude && !!this.state.longitude &&
-                            <Marker
-                                coordinate={{ "latitude": this.state.latitude, "longitude": this.state.longitude }}
-                                title={"Your Location"}
+                            {!!this.state.latitude && !!this.state.longitude &&
+                                <Marker
+                                    coordinate={{ "latitude": this.state.latitude, "longitude": this.state.longitude }}
+                                    title={"Your Location"}
+                                >
+                                    <Image
+                                        source={require('../../images/iconLocationUser.png')}
+                                        style={{ height: IconLocation, width: IconLocation }}
+                                    />
+                                </Marker>
+                            }
+
+                            {!!this.state.cordLatitude && !!this.state.cordLongitude && <Marker
+                                coordinate={{ "latitude": this.state.cordLatitude, "longitude": this.state.cordLongitude }}
+                                title={"Your Destination"}
                             >
                                 <Image
-                                    source={require('../../images/iconLocationUser.png')}
+                                    source={require('../../images/iconMarker.png')}
                                     style={{ height: IconLocation, width: IconLocation }}
                                 />
                             </Marker>
-                        }
+                            }
 
-                        {!!this.state.cordLatitude && !!this.state.cordLongitude && <Marker
-                            coordinate={{ "latitude": this.state.cordLatitude, "longitude": this.state.cordLongitude }}
-                            title={"Your Destination"}
-                        >
-                            <Image
-                                source={require('../../images/iconMarker.png')}
-                                style={{ height: IconLocation, width: IconLocation }}
-                            />
-                        </Marker>
-                        }
+                            {!!this.state.latitude && !!this.state.longitude && this.state.x == 'true' && <MapView.Polyline
+                                coordinates={this.state.coords}
+                                strokeWidth={2}
+                                strokeColor="red" />
+                            }
 
-                        {!!this.state.latitude && !!this.state.longitude && this.state.x == 'true' && <MapView.Polyline
-                            coordinates={this.state.coords}
-                            strokeWidth={2}
-                            strokeColor="red" />
-                        }
-
-                        {!!this.state.latitude && !!this.state.longitude && this.state.x == 'error' && <MapView.Polyline
-                            coordinates={[
-                                { latitude: this.state.latitude, longitude: this.state.longitude },
-                                { latitude: this.state.cordLatitude, longitude: this.state.cordLongitude },
-                            ]}
-                            strokeWidth={2}
-                            strokeColor="red" />
-                        }
-                    </MapView>
+                            {!!this.state.latitude && !!this.state.longitude && this.state.x == 'error' && <MapView.Polyline
+                                coordinates={[
+                                    { latitude: this.state.latitude, longitude: this.state.longitude },
+                                    { latitude: this.state.cordLatitude, longitude: this.state.cordLongitude },
+                                ]}
+                                strokeWidth={2}
+                                strokeColor="red" />
+                            }
+                        </MapView>
+                    </View>
                 </View>
             </View>
 
