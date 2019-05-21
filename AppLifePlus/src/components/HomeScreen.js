@@ -50,7 +50,7 @@ class HomeScreen extends Component {
           <Image source={require('../../images/home.png')} style={{ width: scale(180), height: scale(160), marginBottom: scale(10) }} />
           <Text style={{ fontSize: scale(40), color: 'black', marginBottom: 10 }}>Bạn cần tìm gì hôm nay?</Text>
           <KeyboardAvoidingView behavior='padding'>
-            <View style={{ flex: 1, flexDirection: 'row', width: '80%' }}>
+            <View style={{ flex: 1, flexDirection: 'row', width: '90%' }}>
               <TextInput
                 style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
                 placeholder='Nhập tìm kiếm'
@@ -61,7 +61,7 @@ class HomeScreen extends Component {
               />
               <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
                 onPress={() => this.props.navigation.navigate('Search', { text: this.state.textTimKiem })}>
-                <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59), backgroundColor: 'green' }} />
+                <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59)}} />
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>

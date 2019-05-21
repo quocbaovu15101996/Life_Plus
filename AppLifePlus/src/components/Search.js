@@ -41,17 +41,17 @@ export default class Search extends Component {
 
                     <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
                         <TextInput
-                            style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
+                            style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderRightWidth: 0 }}
                             placeholder='Nhập tìm kiếm'
                             onChangeText={(text) => {
                                 this.setState({ textTimKiem: text })
                             }}
                             value={this.state.textTimKiem}
                         />
-                        <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
+                        <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomRightRadius: 5 }}
                             onPress={() => this.child.apiList(this.state.textTimKiem)}
                         >
-                            <Image source={require('../../images/search.png')} style={{ width: 30, height: 29, backgroundColor: 'green' }} />
+                            <Image source={require('../../images/search.png')} style={{ width: scale(40), height: scale(40) }} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -72,34 +72,36 @@ export default class Search extends Component {
                     <View style={{flexDirection: "row", position: "absolute", right: scale(20)}}>
                     <TouchableOpacity style={{
                         width: 30, height: 30, justifyContent: "center", alignItems: "center",
-                        marginRight: 5, marginLeft: 11, borderColor: '#2ced42', borderWidth: 1
+                        marginRight: 5, marginLeft: 11, borderColor: this.state.isFirstTab ? '#2ced42' : 'lightgrey', borderWidth: 1,
+                        backgroundColor: this.state.isFirstTab ? 'rgba(44, 237, 66, 0.15)' : 'transparent'
                     }}
                         onPress={() => this.changeTab(0)}>
                         {
                             this.state.isFirstTab ?
                                 (
-                                    <Image source={require('../../images/iconmap_active.png')} style={{ width: 25, height: 25 }} />
+                                    <Image source={require('../../images/iconmap_active.png')} style={{ width: scale(35), height: scale(35) }} />
                                 )
                                 :
                                 (
-                                    <Image source={require('../../images/iconmap.png')} style={{ width: 25, height: 25 }} />
+                                    <Image source={require('../../images/iconmap.png')} style={{ width: scale(35), height: scale(35) }} />
                                 )
                         }
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{
                         width: 30, height: 30, justifyContent: "center", alignItems: "center",
-                        borderColor: '#2ced42', borderWidth: 1
+                        borderColor: !this.state.isFirstTab ? '#2ced42' : 'lightgrey', borderWidth: 1, 
+                        backgroundColor: !this.state.isFirstTab ? 'rgba(44, 237, 66, 0.15)' : 'transparent'
                     }}
                         onPress={() => this.changeTab(1)}>
                         {
                             !this.state.isFirstTab ?
                                 (
-                                    <Image source={require('../../images/iconlist_active.png')} style={{ width: 25, height: 25 }} />
+                                    <Image source={require('../../images/iconlist_active.png')} style={{ width: scale(35), height: scale(35) }} />
                                 )
                                 :
                                 (
-                                    <Image source={require('../../images/iconlist.png')} style={{ width: 25, height: 25 }} />
+                                    <Image source={require('../../images/iconlist.png')} style={{ width: scale(35), height: scale(35) }} />
                                 )
 
                         }
