@@ -36,7 +36,6 @@ class MapGuide extends Component {
     }
 
     componentDidMount() {
-        console.log('reload')
         // console.log('Marker', this.props.marker)
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -106,7 +105,7 @@ class MapGuide extends Component {
         return (
             <View style={{ width: '100%', marginTop: scale(20) }}>
                 <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
-                <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>Cách {this.state.distance / 1000} km</Text>
+                <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>Cách {(this.state.distance / 1000).toFixed(2)} km</Text>
                 <View style={{ width: '100%', height: win.height / 1.5 }}>
                     <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
                         <MapView style={{ flex: 1 }} region={{
@@ -126,7 +125,7 @@ class MapGuide extends Component {
                                 >
                                     <Image
                                         source={require('../../images/iconLocationUser.png')}
-                                        style={{ height: IconLocation, width: IconLocation }}
+                                        style={{ height: IconLocation+scale(10), width: IconLocation }}
                                     />
                                 </Marker>
                             }
