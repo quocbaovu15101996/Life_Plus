@@ -28,11 +28,11 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 20, }}>
+        <View style={{ flex: 30, }}>
 
         </View>
 
-        <View style={{ flex: 10, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ height: verticalScale(100), justifyContent: "center", alignItems: "center" }}>
           <Image source={require('../../images/home.png')} style={{ width: scale(180), height: scale(160), marginBottom: scale(10) }} />
           <Text style={{ fontSize: scale(40), color: 'black', marginBottom: 10 }}>Bạn cần tìm gì hôm nay?</Text>
           <KeyboardAvoidingView behavior='padding'>
@@ -54,7 +54,7 @@ export default class HomeScreen extends Component {
 
         </View>
 
-        <View style={{ flex: 70, alignItems: "center", position: "relative" }}>
+        <View style={{ flex: 50, alignItems: "center", position: "relative" }}>
           <View style={{ position: "absolute", bottom: 20, alignItems: "center" }}>
             <Image source={require('../../images/Lifelogo.png')} style={{ width: 100, height: 38 }} />
             <Text style={{ fontSize: 15, color: 'black' }}>Luôn song hành cùng bạn mọi lúc mọi nơi</Text>

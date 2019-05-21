@@ -115,7 +115,9 @@ export default class Map extends Component {
   render() {
     return (
       <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
-        <Text style={{ color: 'black', fontSize: scale(28), marginBottom: verticalScale(10) }}>{this.state.markers.length} kết quả</Text>
+        <Text style={{color:'black', fontSize: scale(28), marginBottom: verticalScale(10), marginLeft: scale(10)}}>
+          "{this.state.markers.length}" kết quả
+        </Text>
         <MapView
           ref={ref => {
             this.map = ref;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, Picker } from 'react-native';
+import { Text, View, Image, TextInput, TouchableOpacity, Picker, KeyboardAvoidingView } from 'react-native';
 import Map from './Map';
 import List from './List'
+import { scale } from '../userControl/Scale';
 
 export default class Search extends Component {
     constructor(props) {
@@ -33,8 +34,9 @@ export default class Search extends Component {
 
     render() {
         return (
+
             <View style={{ flex: 1 }}>
-                <View style={{ flex: 8, flexDirection: "row", margin: 8 }}>
+                <View style={{ height: scale(80), flexDirection: "row", margin: 8 }}>
                     <Image source={require('../../images/Lifelogo.png')} style={{ width: 90, height: 38, marginRight: 5 }} />
 
                     <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
@@ -54,7 +56,7 @@ export default class Search extends Component {
                     </View>
                 </View>
 
-                <View style={{ flex: 7, flexDirection: "row" }}>
+                <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Picker
                         style={{ height: 20, width: 140 }}>
                         <Picker.Item label="Duoi 3 km" value="java" />
@@ -99,9 +101,11 @@ export default class Search extends Component {
                                 (
                                     <Image source={require('../../images/iconlist.png')} style={{ width: 25, height: 25 }} />
                                 )
+
                         }
                     </TouchableOpacity>
                 </View>
+
                 <View style={{ flex: 85 }}>
                     {
                         this.state.isFirstTab ? <Map onRef={ref => (this.child = ref)} navigation={this.props.navigation} /> :
