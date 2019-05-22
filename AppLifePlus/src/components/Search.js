@@ -11,7 +11,9 @@ class Search extends Component {
         super(props)
         this.state = {
             textTimKiem: this.props.navigation.getParam('text'),
-            isFirstTab: true
+            isFirstTab: true,
+            listLinhVuc: [],
+            linhvuc: '',
         }
     }
     static navigationOptions = {
@@ -19,6 +21,7 @@ class Search extends Component {
     };
     componentDidMount() {
         //alert(JSON.stringify(this.props.location))
+        this.apiGetListLinhVuc()
     }
 
     changeTab(index) {
@@ -59,6 +62,35 @@ class Search extends Component {
             return null;
         }
     }
+
+    async apiGetListLinhVuc() {
+        let url = 'https://lifefriend.vn/api/shop/businesslinelist'
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: 'GET',
+                    headers: {
+                    },
+                }
+            )
+            if (response.status == "200") {
+                let responseJson = await response.json();
+                this.setState({
+                    listLinhVuc: responseJson.Data
+                })
+                return responseJson;
+            }
+            else {
+                return null;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
     render() {
         return (
 
@@ -86,15 +118,18 @@ class Search extends Component {
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Picker
                         style={{ height: 20, width: 140 }}>
-                        <Picker.Item label="Dưới 3 km" value="java" />
-                        <Picker.Item label="Dưới 2 km" value="js" />
-                        <Picker.Item label="Dưới 1 km" value="js" />
+                        <Picker.Item label="Dưới 3 km" value="3km" />
+                        <Picker.Item label="Dưới 2 km" value="2km" />
+                        <Picker.Item label="Dưới 1 km" value="1km" />
                     </Picker>
 
-                    <Picker
-                        style={{ height: 20, width: 140 }}>
-                        <Picker.Item label="Tất cả" value="java" />
-                        <Picker.Item label="A" value="js" />
+                    
+                    <Picker style={{ height: 20, width: 140 }}
+                        selectedValue={this.state.linhvuc}
+                        onValueChange={(itemValue, itemIndex) => this.setState({ linhvuc: itemValue })}>
+                        {this.state.listLinhVuc.map((item, index) => (
+                            <Picker.Item label={item.name} value={item.id} key={index} />)
+                        )}
                     </Picker>
 
                     <View style={{ flexDirection: 'row', position: 'absolute', right: 8 }}>
@@ -137,8 +172,8 @@ class Search extends Component {
 
                 <View style={{ flex: 85 }}>
                     {
-                        this.state.isFirstTab ? <Map  navigation={this.props.navigation} /> :
-                            <List  navigation={this.props.navigation} />
+                        this.state.isFirstTab ? <Map navigation={this.props.navigation} /> :
+                            <List navigation={this.props.navigation} />
                     }
 
                 </View>
@@ -151,4 +186,4 @@ class Search extends Component {
 const mapStateToProps = state => ({
     location: state.location,
 });
-export default connect(mapStateToProps, {updateMarkers})(Search);
+export default connect(mapStateToProps, { updateMarkers })(Search);
