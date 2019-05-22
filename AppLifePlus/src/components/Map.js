@@ -94,7 +94,7 @@ class Map extends Component {
           ref={ref => {
             this.map = ref;
           }}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '107%' }}
           region={{
             latitude: this.state.region.latitude,
             longitude: this.state.region.longitude,
