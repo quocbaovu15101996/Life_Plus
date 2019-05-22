@@ -7,13 +7,15 @@ import Polyline from '@mapbox/polyline';
 import geolib from 'geolib';
 
 var IconLocation = scale(50);
-const LATITUDEDELTA = 0.5;
+var paddingMap = scale(40)
+const LATITUDEDELTA = 0.05;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
+const DEFAULT_PADDING = { top: paddingMap, right: paddingMap, bottom: paddingMap, left: paddingMap };
 
 class MapGuide extends Component {
     constructor(props) {
         super(props);
-
+        this.map = null;
         this.state = {
             statusBarHeight: 5,
             distance: 0,
@@ -36,7 +38,6 @@ class MapGuide extends Component {
     }
 
     componentDidMount() {
-        // console.log('Marker', this.props.marker)
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 //Tính khoảng cách
@@ -52,7 +53,6 @@ class MapGuide extends Component {
                     longitude: position.coords.longitude,
                     error: null,
                 });
-
                 this.mergeLot();
 
             },
@@ -100,6 +100,21 @@ class MapGuide extends Component {
             return error
         }
     }
+    ZoomBounds() {
+        this.map.fitToCoordinates([
+            {
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+            },
+            {
+                latitude: this.state.cordLatitude,
+                longitude: this.state.cordLongitude,
+            },
+        ], {
+                edgePadding: DEFAULT_PADDING,
+                animated: true
+            });
+    }
     render() {
 
         return (
@@ -120,6 +135,10 @@ class MapGuide extends Component {
                         }}
                             showsUserLocation={true}
                             showsMyLocationButton={true}
+                            ref={ref => {
+                                this.map = ref;
+                            }}
+                            onMapReady={() => setTimeout(() => this.ZoomBounds(), 500)}
                         >
 
                             {!!this.state.latitude && !!this.state.longitude &&

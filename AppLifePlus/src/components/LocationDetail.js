@@ -60,10 +60,14 @@ export default class LocationDetail extends Component {
                     <ScrollView>
                         <View style={{ margin: scale(10) }}>
                             <Image source={require('../../images/Lifelogo.png')} style={{ width: scale(180), height: verticalScale(75), marginRight: 5 }} />
-                            <TouchableOpacity style={{ position: 'absolute', right: 5, top: scale(10) }}
+                            <TouchableOpacity style={{ position: 'absolute', right: 0, top: scale(7)}}
                                 onPress={() => this.props.navigation.goBack(null)}
                             >
+                                <View style={{flexDirection: 'row', marginTop: scale(15), marginBottom: scale(15)}}>
+                                    <Image source={require('../../images/iconBack.png')} style={{width: scale(50), height: verticalScale(50)}}/>
                                 <Text style={{ color: 'black', fontSize: scale(28) }}>Back</Text>
+
+                                </View>
                             </TouchableOpacity>
 
                             <View style={{ width: '100%', marginTop: scale(20) }}>

@@ -3,7 +3,7 @@ import { Text, View, Image, TextInput, TouchableOpacity, Picker, KeyboardAvoidin
 import Map from './Map';
 import List from './List';
 import { connect } from 'react-redux';
-import { scale } from '../userControl/Scale';
+import { scale, verticalScale } from '../userControl/Scale';
 import { updateMarkers } from '../redux/actions/listMarker';
 
 class Search extends Component {
@@ -118,14 +118,14 @@ class Search extends Component {
 
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Picker
-                        style={{ height: 20, width: 140 }}>
+                        style={{ height: verticalScale(50), width: scale(250) }}>
                         <Picker.Item label="Dưới 3 km" value="3km" />
                         <Picker.Item label="Dưới 2 km" value="2km" />
                         <Picker.Item label="Dưới 1 km" value="1km" />
                     </Picker>
 
                     
-                    <Picker style={{ height: 20, width: 140 }}
+                    <Picker style={{ height: verticalScale(50), width: scale(300) }}
                         selectedValue={this.state.linhvuc}
                         onValueChange={(itemValue, itemIndex) => this.setState({ linhvuc: itemValue })}>
                         {this.state.listLinhVuc.map((item, index) => (
@@ -156,7 +156,7 @@ class Search extends Component {
                             width: 30, height: 30, justifyContent: "center", alignItems: "center",
                             borderColor: !this.state.isFirstTab ? '#2ced42' : 'lightgrey', borderWidth: 1,
                             backgroundColor: !this.state.isFirstTab ? 'rgba(44,237,66,0.15)' : 'transparent'
-                        }}
+                         }}
                             onPress={() => this.changeTab(1)}>
                             {
                                 !this.state.isFirstTab ?

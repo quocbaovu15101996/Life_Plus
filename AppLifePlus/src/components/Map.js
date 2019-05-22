@@ -15,7 +15,7 @@ import store from '../redux/stores';
 
 const win = Dimensions.get("window");
 var IconLocation = scale(50);
-const LATITUDEDELTA = 0.5;
+const LATITUDEDELTA = 0.25;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
 const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
 class Map extends Component {
