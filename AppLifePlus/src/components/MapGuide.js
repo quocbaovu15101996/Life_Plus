@@ -136,7 +136,7 @@ class MapGuide extends Component {
                 }</Text>
                 <View style={{ width: '100%', height: win.height / 1.5 }}>
                     <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
-                        <MapView style={{ flex: 1 }} region={{
+                        <MapView style={{ width: '100%', height: '107%' }} region={{
                             latitude: this.state.region.latitude,
                             longitude: this.state.region.longitude,
                             latitudeDelta: LATITUDEDELTA,

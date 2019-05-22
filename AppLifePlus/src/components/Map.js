@@ -15,7 +15,7 @@ import store from '../redux/stores';
 
 const win = Dimensions.get("window");
 var IconLocation = scale(50);
-const LATITUDEDELTA = 0.25;
+const LATITUDEDELTA = 0.2;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
 const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
 class Map extends Component {
@@ -94,7 +94,7 @@ class Map extends Component {
           ref={ref => {
             this.map = ref;
           }}
-          style={{ flex: 1 }}
+          style={{ width: '100%', height: '100%' }}
           region={{
             latitude: this.state.region.latitude,
             longitude: this.state.region.longitude,
