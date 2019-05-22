@@ -5,6 +5,7 @@ const win = Dimensions.get('window');
 import MapView, { Marker } from 'react-native-maps';
 import Polyline from '@mapbox/polyline';
 import geolib from 'geolib';
+import { connect } from 'react-redux';
 
 var IconLocation = scale(50);
 var paddingMap = scale(40)
@@ -103,8 +104,8 @@ class MapGuide extends Component {
     ZoomBounds() {
         this.map.fitToCoordinates([
             {
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
+                latitude: this.props.location.latitude,
+                longitude: this.props.location.longitude,
             },
             {
                 latitude: this.state.cordLatitude,
@@ -138,7 +139,7 @@ class MapGuide extends Component {
                             ref={ref => {
                                 this.map = ref;
                             }}
-                            onMapReady={() => setTimeout(() => this.ZoomBounds(), 500)}
+                            onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
                         >
 
                             {!!this.state.latitude && !!this.state.longitude &&
@@ -197,4 +198,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MapGuide;
+const mapStateToProps = state => ({
+    location: state.location.location,
+  });
+
+export default connect(mapStateToProps, null)(MapGuide);

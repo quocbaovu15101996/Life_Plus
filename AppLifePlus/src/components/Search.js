@@ -14,6 +14,7 @@ class Search extends Component {
             isFirstTab: true,
             listLinhVuc: [],
             linhvuc: '',
+            khoangcach: '',
         }
     }
     static navigationOptions = {
@@ -118,16 +119,19 @@ class Search extends Component {
 
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Picker
+                        selectedValue={this.state.khoangcach}
+                        onValueChange={(itemValue, itemIndex) => this.setState({ khoangcach: itemValue })}
                         style={{ height: verticalScale(50), width: scale(250) }}>
                         <Picker.Item label="Dưới 3 km" value="3km" />
                         <Picker.Item label="Dưới 2 km" value="2km" />
                         <Picker.Item label="Dưới 1 km" value="1km" />
                     </Picker>
 
-                    
+
                     <Picker style={{ height: verticalScale(50), width: scale(300) }}
                         selectedValue={this.state.linhvuc}
                         onValueChange={(itemValue, itemIndex) => this.setState({ linhvuc: itemValue })}>
+                        <Picker.Item label='Tất cả' value='all' />
                         {this.state.listLinhVuc.map((item, index) => (
                             <Picker.Item label={item.name} value={item.id} key={index} />)
                         )}
@@ -156,7 +160,7 @@ class Search extends Component {
                             width: 30, height: 30, justifyContent: "center", alignItems: "center",
                             borderColor: !this.state.isFirstTab ? '#2ced42' : 'lightgrey', borderWidth: 1,
                             backgroundColor: !this.state.isFirstTab ? 'rgba(44,237,66,0.15)' : 'transparent'
-                         }}
+                        }}
                             onPress={() => this.changeTab(1)}>
                             {
                                 !this.state.isFirstTab ?
