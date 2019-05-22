@@ -81,7 +81,7 @@ class HomeScreen extends Component {
           <KeyboardAvoidingView behavior='padding'>
             <View style={{ flex: 1, flexDirection: 'row', width: '90%' }}>
               <TextInput
-                style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
+                style={{ flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
                 placeholder='Nhập tìm kiếm'
                 onChangeText={(text) => {
                   this.setState({ textTimKiem: text })
