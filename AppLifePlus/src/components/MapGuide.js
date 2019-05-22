@@ -116,8 +116,8 @@ class MapGuide extends Component {
                 longitude: this.props.location.longitude,
             },
             {
-                latitude: this.state.cordLatitude,
-                longitude: this.state.cordLongitude,
+                latitude: Number(this.props.marker.latitude),
+                longitude: Number(this.props.marker.longitude),
             },
         ], {
                 edgePadding: DEFAULT_PADDING,
