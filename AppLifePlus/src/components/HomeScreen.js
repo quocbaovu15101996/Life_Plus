@@ -93,7 +93,7 @@ class HomeScreen extends Component {
                   this.apiList(this.state.textTimKiem);
                   this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
                 }}>
-                <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59), backgroundColor: 'green' }} />
+                <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59)}} />
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
