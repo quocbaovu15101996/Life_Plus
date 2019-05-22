@@ -21,45 +21,8 @@ var khungHeight = verticalScale(140)
 class List extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      listData: []
-    }
   }
-  componentDidMount() {
-    this.props.onRef(this)
-  }
-  componentWillUnmount() {
-    this.props.onRef(undefined)
-  }
-  async apiList(string) {
-    let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
-    try {
-      let response = await fetch(
-        url,
-        {
-          method: 'GET',
-          headers: {
-          },
-        }
-      )
-      if (response.status == "200") {
-        let responseJson = await response.json();
-        this.setState({
-            listData: responseJson.Data
-        })
-        // alert(JSON.stringify(responseJson))
-        // alert(JSON.stringify(this.state.markers))
-        return responseJson;
-      }
-      else {
-        return null;
-      }
-    }
-    catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
+
 
   _renderItem = ({ item }) => (
     <TouchableOpacity key={item.id} style={{
@@ -85,10 +48,10 @@ class List extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Text style={{color:'black', fontSize: scale(28), marginBottom: verticalScale(10), marginLeft: scale(10)}}>
-          "{this.state.listData.length}" kết quả
+          "{this.props.markers.length}" kết quả
         </Text>
         <FlatList
-            data={this.state.listData}
+            data={this.props.markers}
             keyExtractor={(item, index) => item.id.toString()}
             renderItem={this._renderItem}
             numColumns={1}
@@ -103,6 +66,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  markers: state.markers,
+  markers: state.markers.markers,
 });
 export default connect(mapStateToProps, null)(List);

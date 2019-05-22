@@ -11,6 +11,7 @@ import { Platform, StyleSheet, Text, View, Dimensions, TouchableOpacity, Image }
 import MapView, { Marker, Polygon } from "react-native-maps";
 import { scale, verticalScale } from "../userControl/Scale";
 import { connect } from 'react-redux';
+import store from '../redux/stores';
 
 const win = Dimensions.get("window");
 var IconLocation = scale(50);
@@ -43,68 +44,36 @@ class Map extends Component {
       ]
     }
   }
-  componentDidMount() {
-    this.props.onRef(this)
-  }
-  componentWillUnmount() {
-    this.props.onRef(undefined)
-  }
   componentWillMount() {
     // show button ShowMyLocation in Map
     setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
   }
 
-  async apiList(string) {
-    let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
-    try {
-      let response = await fetch(
-        url,
-        {
-          method: 'GET',
-          headers: {
-          },
-        }
-      )
-      if (response.status == "200") {
-        let responseJson = await response.json();
-        this.setState({
-          markers: responseJson.Data
-        })
-        return responseJson;
-      }
-      else {
-        return null;
-      }
-    }
-    catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
   renderMarker(markers) {
-    if (markers.length > 0)
-      return markers.map((marker, i) => (
-        <Marker
-          coordinate={{
-            latitude: Number(marker.latitude),
-            longitude: Number(marker.longitude)
-          }}
-          title={marker.name}
-          key={i}
-          onPress={() =>
-            this.props.navigation.navigate("LocationDetail", { id: marker.id })
-          }
-        >
-          {/* <Text>{marker.name}</Text> */}
-          <Image
-            source={require('../../images/iconMarker.png')}
-            style={{ height: IconLocation, width: IconLocation }}
-          />
-        </Marker>
-      )
-      )
-    else
+    if (markers == null)
       return null
+    else
+      if (markers.length > 0)
+        return markers.map((marker, i) => (
+          <Marker
+            coordinate={{
+              latitude: Number(marker.latitude),
+              longitude: Number(marker.longitude)
+            }}
+            title={marker.name}
+            key={i}
+            onPress={() =>
+              this.props.navigation.navigate("LocationDetail", { id: marker.id })
+            }
+          >
+            {/* <Text>{marker.name}</Text> */}
+            <Image
+              source={require('../../images/iconMarker.png')}
+              style={{ height: IconLocation, width: IconLocation }}
+            />
+          </Marker>
+        )
+        )
   }
   ZoomBounds() {
     // let listMarker = this.state.markers;
@@ -119,7 +88,7 @@ class Map extends Component {
     return (
       <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
         <Text style={{ color: 'black', fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(10) }}>
-          "{this.state.markers.length}" kết quả
+          "{this.props.markers.length}" kết quả
         </Text>
         <MapView
           ref={ref => {
@@ -136,7 +105,7 @@ class Map extends Component {
           showsMyLocationButton={true}
         >
           {
-            this.renderMarker(this.state.markers)
+            this.renderMarker(this.props.markers)
           }
         </MapView>
       </View>
@@ -149,7 +118,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  markers: state.markers
+  markers: state.markers.markers,
 });
 
 export default connect(mapStateToProps, null)(Map);
