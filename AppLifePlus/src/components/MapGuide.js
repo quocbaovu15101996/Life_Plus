@@ -39,37 +39,45 @@ class MapGuide extends Component {
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                //Tính khoảng cách
+        // navigator.geolocation.getCurrentPosition(
+        //     (position) => {
+        //         //Tính khoảng cách
 
-                let distance = geolib.getDistance(position.coords, {
-                    latitude: this.state.cordLatitude,
-                    longitude: this.state.cordLongitude
-                });
+        //         // let distance = geolib.getDistance(position.coords, {
+        //         //     latitude: this.state.cordLatitude,
+        //         //     longitude: this.state.cordLongitude
+        //         // });
 
-                this.setState({
-                    distance: distance,
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    error: null,
-                });
-                this.mergeLot();
+        //         // this.setState({
+        //         //     distance: distance,
+        //         //     latitude: position.coords.latitude,
+        //         //     longitude: position.coords.longitude,
+        //         //     error: null,
+        //         // });
+        //         // this.mergeLot();
 
-            },
-            (error) => this.setState({ error: error.message }),
-            { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-        );
+        //     },
+        //     (error) => this.setState({ error: error.message }),
+        //     { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+        // );
+        let distance = geolib.getDistance(this.props.location, {
+            latitude: this.state.cordLatitude,
+            longitude: this.state.cordLongitude
+        });
+
+        this.setState({
+            distance: distance,
+            error: null,
+        });
+        this.mergeLot();
     }
     componentWillMount() {
         setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
     }
-    getDistance() {
 
-    }
     mergeLot() {
-        if (this.state.latitude != null && this.state.longitude != null && this.state.cordLatitude != null && this.state.cordLongitude != null) {
-            let concatLot = this.state.latitude + "," + this.state.longitude
+        if (this.props.location.latitude != null && this.props.location.longitude != null && this.state.cordLatitude != null && this.state.cordLongitude != null) {
+            let concatLot = this.props.location.latitude + "," + this.props.location.longitude
             let des = this.state.cordLatitude + "," + this.state.cordLongitude
             // console.log('des', des + concatLot)
             this.setState({
@@ -142,9 +150,9 @@ class MapGuide extends Component {
                             onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
                         >
 
-                            {!!this.state.latitude && !!this.state.longitude &&
+                            {!!this.props.location.latitude && !!this.props.location.longitude &&
                                 <Marker
-                                    coordinate={{ "latitude": this.state.latitude, "longitude": this.state.longitude }}
+                                    coordinate={{ "latitude": this.props.location.latitude, "longitude": this.props.location.longitude }}
                                     title={"Your Location"}
                                 >
                                     <Image
@@ -165,15 +173,15 @@ class MapGuide extends Component {
                             </Marker>
                             }
 
-                            {!!this.state.latitude && !!this.state.longitude && this.state.x == 'true' && <MapView.Polyline
+                            {!!this.props.location.latitude && !!this.props.location.longitude && this.state.x == 'true' && <MapView.Polyline
                                 coordinates={this.state.coords}
                                 strokeWidth={2}
                                 strokeColor="red" />
                             }
 
-                            {!!this.state.latitude && !!this.state.longitude && this.state.x == 'error' && <MapView.Polyline
+                            {!!this.props.location.latitude && !!this.props.location.longitude && this.state.x == 'error' && <MapView.Polyline
                                 coordinates={[
-                                    { latitude: this.state.latitude, longitude: this.state.longitude },
+                                    { latitude: this.props.location.latitude, longitude: this.props.location.longitude },
                                     { latitude: this.state.cordLatitude, longitude: this.state.cordLongitude },
                                 ]}
                                 strokeWidth={2}
@@ -200,6 +208,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     location: state.location.location,
-  });
+});
 
 export default connect(mapStateToProps, null)(MapGuide);

@@ -104,6 +104,17 @@ class Map extends Component {
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
+          {!!this.props.location.latitude && !!this.props.location.longitude &&
+            <Marker
+              coordinate={{ "latitude": this.props.location.latitude, "longitude": this.props.location.longitude }}
+              title={"Your Location"}
+            >
+              <Image
+                source={require('../../images/iconLocationUser.png')}
+                style={{ height: IconLocation + scale(10), width: IconLocation }}
+              />
+            </Marker>
+          }
           {
             this.renderMarker(this.props.markers)
           }
@@ -119,6 +130,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   markers: state.markers.markers,
+  location: state.location.location
 });
 
 export default connect(mapStateToProps, null)(Map);
