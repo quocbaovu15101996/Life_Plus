@@ -26,35 +26,37 @@ class List extends Component {
 
   _renderItem = ({ item }) => (
     <TouchableOpacity key={item.id} style={{
-        backgroundColor: 'white', width: '95%', borderBottomColor: 'lightgrey', borderBottomWidth: 1, borderRightColor: 'lightgrey', 
-        borderRightWidth: 1, height: khungHeight, flexDirection: "row", marginBottom: 10
+      backgroundColor: 'white', width: '95%', borderBottomColor: 'lightgrey', borderBottomWidth: 1, borderRightColor: 'lightgrey',
+      borderRightWidth: 1, height: khungHeight, flexDirection: "row", marginBottom: 10
     }} onPress={() => this.props.navigation.navigate('LocationDetail', { id: item.id })} >
-        <View style={{ flex: 30, justifyContent: "center", alignItems: "center" }} >
-            <Image source={{ uri:
-                item.avatar }} style={{width: scale(150), height: scale(100)}}/>
-        </View>
+      <View style={{ flex: 30, justifyContent: "center", alignItems: "center" }} >
+        <Image source={{
+          uri:
+            item.avatar
+        }} style={{ width: scale(150), height: scale(100) }} />
+      </View>
 
-        <View style={{ flex: 70, justifyContent: "center" }}>
-            {/* <Text style={{color: item.isRead ? 'black' : 'grey', fontSize: titleSize}}>{item.title}</Text> */}
-            <Text style={{ color: 'black', fontSize: titleSize }}>{item.name}</Text>
-            <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.phone_number}</Text>
-            <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.street_address}</Text>
-            <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.business_line_text}</Text>
-        </View>
+      <View style={{ flex: 70, justifyContent: "center" }}>
+        {/* <Text style={{color: item.isRead ? 'black' : 'grey', fontSize: titleSize}}>{item.title}</Text> */}
+        <Text style={{ color: 'black', fontSize: titleSize }}>{item.name}</Text>
+        <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.phone_number}</Text>
+        <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.street_address}</Text>
+        <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.business_line_text}</Text>
+      </View>
     </TouchableOpacity>
-)
+  )
 
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Text style={{color:'black', fontSize: scale(28), marginBottom: verticalScale(10), marginLeft: scale(10)}}>
+        <Text style={{ color: 'black', fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(10) }}>
           "{this.props.markers.length}" kết quả
         </Text>
         <FlatList
-            data={this.props.markers}
-            keyExtractor={(item, index) => item.id.toString()}
-            renderItem={this._renderItem}
-            numColumns={1}
+          data={this.props.markers}
+          keyExtractor={(item, index) => item.id.toString()}
+          renderItem={this._renderItem}
+          numColumns={1}
         />
       </View>
     );
