@@ -78,7 +78,7 @@ class HomeScreen extends Component {
           <Image source={require('../../images/home.png')} style={{ width: scale(180), height: scale(160), marginBottom: scale(10) }} />
           <Text style={{ fontSize: scale(40), color: 'black', marginBottom: 10 }}>Bạn cần tìm gì hôm nay?</Text>
           <KeyboardAvoidingView behavior='padding'>
-            <View style={{ flex: 1, flexDirection: 'row', width: '80%' }}>
+            <View style={{ flex: 1, flexDirection: 'row', width: '90%' }}>
               <TextInput
                 style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
                 placeholder='Nhập tìm kiếm'
