@@ -64,7 +64,7 @@ class Search extends Component {
 
             <View style={{ flex: 1 }}>
                 <View style={{ height: scale(80), flexDirection: "row", margin: 8 }}>
-                    <Image source={require('../../images/Lifelogo.png')} style={{ width: 90, height: 38, marginRight: 5 }} />
+                    <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
 
                     <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
                         <TextInput
