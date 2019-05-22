@@ -54,6 +54,7 @@ class HomeScreen extends Component {
       )
       if (response.status == "200") {
         let responseJson = await response.json();
+        // alert(JSON.stringify(responseJson.Data))
         this.props.updateMarkers(responseJson.Data)
         return responseJson;
       }

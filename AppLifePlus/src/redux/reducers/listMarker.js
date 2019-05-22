@@ -6,7 +6,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   if (action.type === UPDATE_MARKERS) {
-    //   alert(JSON.stringify(action.markers))
+      // alert(JSON.stringify(action.markers))
     return {
       ...state,
       markers: action.markers,

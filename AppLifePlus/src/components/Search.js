@@ -4,6 +4,7 @@ import Map from './Map';
 import List from './List';
 import { connect } from 'react-redux';
 import { scale } from '../userControl/Scale';
+import { updateMarkers } from '../redux/actions/listMarker';
 
 class Search extends Component {
     constructor(props) {
@@ -33,6 +34,31 @@ class Search extends Component {
         }
     }
 
+    async apiList(string) {
+        let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: 'GET',
+                    headers: {
+                    },
+                }
+            )
+            if (response.status == "200") {
+                let responseJson = await response.json();
+                this.props.updateMarkers(responseJson.Data)
+                return responseJson;
+            }
+            else {
+                return null;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
     render() {
         return (
 
@@ -49,8 +75,9 @@ class Search extends Component {
                             }}
                             value={this.state.textTimKiem}
                         />
+
                         <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: scale(10), borderBottomRightRadius: scale(10) }}
-                            onPress={() => this.child.apiList(this.state.textTimKiem)}
+                            onPress={() => this.apiList(this.state.textTimKiem)}
                         >
                             <Image source={require('../../images/search.png')} style={{ width: 30, height: 29, backgroundColor: 'green' }} />
                         </TouchableOpacity>
@@ -113,8 +140,8 @@ class Search extends Component {
 
                 <View style={{ flex: 85 }}>
                     {
-                        this.state.isFirstTab ? <Map onRef={ref => (this.child = ref)} navigation={this.props.navigation} /> :
-                            <List onRef={ref => (this.child = ref)} navigation={this.props.navigation} />
+                        this.state.isFirstTab ? <Map navigation={this.props.navigation} /> :
+                            <List navigation={this.props.navigation} />
                     }
 
                 </View>
@@ -127,4 +154,4 @@ class Search extends Component {
 const mapStateToProps = state => ({
     location: state.location,
 });
-export default connect(mapStateToProps, null)(Search);
+export default connect(mapStateToProps, { updateMarkers })(Search);
