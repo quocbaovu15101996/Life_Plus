@@ -96,18 +96,19 @@ class Search extends Component {
 
             <View style={{ flex: 1 }}>
                 <View style={{ height: scale(80), flexDirection: "row", margin: 8 }}>
-                    <Image source={require('../../images/Lifelogo.png')} style={{ width: 90, height: 38, marginRight: 5 }} />
+                    <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
 
                     <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
                         <TextInput
-                            style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, borderRightWidth: 0 }}
+                            style={{ flex: 85, borderWidth: 2, borderColor: 'gray', borderTopLeftRadius: scale(10), borderBottomLeftRadius: scale(10), borderRightWidth: 0 }}
                             placeholder='Nhập tìm kiếm'
                             onChangeText={(text) => {
                                 this.setState({ textTimKiem: text })
                             }}
                             value={this.state.textTimKiem}
                         />
-                        <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
+
+                        <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: scale(10), borderBottomRightRadius: scale(10) }}
                             onPress={() => this.apiList(this.state.textTimKiem)}
                         >
                             <Image source={require('../../images/search.png')} style={{ width: 30, height: 29, backgroundColor: 'green' }} />
@@ -135,7 +136,8 @@ class Search extends Component {
                     <View style={{ flexDirection: 'row', position: 'absolute', right: 8 }}>
                         <TouchableOpacity style={{
                             width: 30, height: 30, justifyContent: "center", alignItems: "center",
-                            borderColor: '#2ced42', borderWidth: 1
+                            borderColor: this.state.isFirstTab ? '#2ced42' : 'lightgrey', borderWidth: 1, marginRight: scale(10),
+                            backgroundColor: this.state.isFirstTab ? 'rgba(44,237,66,0.15)' : 'transparent'
                         }}
                             onPress={() => this.changeTab(0)}>
                             {
@@ -152,7 +154,8 @@ class Search extends Component {
 
                         <TouchableOpacity style={{
                             width: 30, height: 30, justifyContent: "center", alignItems: "center",
-                            borderColor: '#2ced42', borderWidth: 1
+                            borderColor: !this.state.isFirstTab ? '#2ced42' : 'lightgrey', borderWidth: 1,
+                            backgroundColor: !this.state.isFirstTab ? 'rgba(44,237,66,0.15)' : 'transparent'
                         }}
                             onPress={() => this.changeTab(1)}>
                             {
