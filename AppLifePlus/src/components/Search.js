@@ -112,7 +112,7 @@ class Search extends Component {
                         <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: scale(10), borderBottomRightRadius: scale(10) }}
                             onPress={() => this.apiList(this.state.textTimKiem)}
                         >
-                            <Image source={require('../../images/search.png')} style={{ width: 30, height: 29, backgroundColor: 'green' }} />
+                            <Image source={require('../../images/search.png')} style={{ width: 30, height: 29 }} />
                         </TouchableOpacity>
                     </View>
                 </View>
