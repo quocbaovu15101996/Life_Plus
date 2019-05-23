@@ -96,12 +96,15 @@ class Search extends Component {
         return (
 
             <View style={{ flex: 1 }}>
-                <View style={{ height: scale(80), flexDirection: "row", margin: 8 }}>
+                <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: 'pink', 
+                padding: scale(15), marginBottom: scale(20) }}>
+                <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
 
-                    <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%', marginTop: scale(5) }}>
                         <TextInput
-                            style={{ flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: scale(10), borderBottomLeftRadius: scale(10), borderRightWidth: 0 }}
+                            style={{ flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: scale(10), 
+                            borderBottomLeftRadius: scale(10), borderRightWidth: 0, backgroundColor: 'white', paddingLeft: scale(10) }}
                             placeholder='Nhập tìm kiếm'
                             onChangeText={(text) => {
                                 this.setState({ textTimKiem: text })
@@ -115,6 +118,7 @@ class Search extends Component {
                             <Image source={require('../../images/search.png')} style={{ width: 30, height: 29 }} />
                         </TouchableOpacity>
                     </View>
+                </View>
                 </View>
 
                 <View style={{ height: scale(80), flexDirection: "row" }}>
