@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 var IconLocation = scale(50);
 var paddingMap = scale(40)
-const LATITUDEDELTA = 0.05;
+const LATITUDEDELTA = 0.1;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
 const DEFAULT_PADDING = { top: paddingMap, right: paddingMap, bottom: paddingMap, left: paddingMap };
 
@@ -147,7 +147,7 @@ class MapGuide extends Component {
                             ref={ref => {
                                 this.map = ref;
                             }}
-                            onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
+                            // onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
                         >
 
                             {!!this.props.location.latitude && !!this.props.location.longitude &&

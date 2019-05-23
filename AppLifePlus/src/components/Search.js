@@ -5,6 +5,9 @@ import List from './List';
 import { connect } from 'react-redux';
 import { scale, verticalScale } from '../userControl/Scale';
 import { updateMarkers } from '../redux/actions/listMarker';
+import { updateListMarkers } from '../redux/actions/listMarkerSearch';
+
+import geolib from 'geolib';
 
 class Search extends Component {
     constructor(props) {
@@ -13,8 +16,9 @@ class Search extends Component {
             textTimKiem: this.props.navigation.getParam('text'),
             isFirstTab: true,
             listLinhVuc: [],
-            linhvuc: '',
-            khoangcach: '',
+            linhvuc: 'all',
+            khoangcach: '100000',
+            markers: [],
         }
     }
     static navigationOptions = {
@@ -23,6 +27,7 @@ class Search extends Component {
     componentDidMount() {
         //alert(JSON.stringify(this.props.location))
         this.apiGetListLinhVuc()
+        // setTimeout(() => alert(JSON.stringify(this.props.listMarkers)), 2000)
     }
 
     changeTab(index) {
@@ -51,6 +56,15 @@ class Search extends Component {
             )
             if (response.status == "200") {
                 let responseJson = await response.json();
+
+                for (let i = 0; i < responseJson.Data.length; i++) {
+                    responseJson.Data[i].distance = this.getDistance(Number(responseJson.Data[i].latitude), Number(responseJson.Data[i].longitude))
+                }
+                this.setState({
+                    linhvuc: 'all',
+                    khoangcach: '100000',
+                })
+                this.props.updateListMarkers(responseJson.Data)
                 this.props.updateMarkers(responseJson.Data)
                 return responseJson;
             }
@@ -77,6 +91,7 @@ class Search extends Component {
             )
             if (response.status == "200") {
                 let responseJson = await response.json();
+                // console.log('DS linh vuc', responseJson.Data)
                 this.setState({
                     listLinhVuc: responseJson.Data
                 })
@@ -91,7 +106,33 @@ class Search extends Component {
             return null;
         }
     }
-
+    getDistance(latitudeB, longitudeB) {
+        // console.log('Vị trí B', latitudeB)
+        return geolib.getDistance(this.props.location, {
+            latitude: latitudeB,
+            longitude: longitudeB
+        });
+    }
+    filterMarkersDistance(value) {
+        let listMarkers = this.props.listMarkers.filter(data => {
+            if (this.state.linhvuc == 'all') {
+                return data.distance <= Number(value);
+            }
+            else
+                return data.distance <= Number(value) && data.business_line == Number(this.state.linhvuc);
+        });
+        this.props.updateMarkers(listMarkers)
+    }
+    filterMarkersLinhVuc(value) {
+        let listMarkers = this.props.listMarkers.filter(data => {
+            if (value == 'all') {
+                return data && data.distance <= Number(this.state.khoangcach);
+            }
+            else
+                return data.business_line == Number(value) && data.distance <= Number(this.state.khoangcach);
+        });
+        this.props.updateMarkers(listMarkers)
+    }
     render() {
         return (
 
@@ -124,20 +165,22 @@ class Search extends Component {
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Picker
                         selectedValue={this.state.khoangcach}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ khoangcach: itemValue })}
+                        onValueChange={(itemValue, itemIndex) => { this.filterMarkersDistance(itemValue); this.setState({ khoangcach: itemValue }) }}
                         style={{ height: verticalScale(50), width: scale(250) }}>
-                        <Picker.Item label="Dưới 3 km" value="3km" />
-                        <Picker.Item label="Dưới 2 km" value="2km" />
-                        <Picker.Item label="Dưới 1 km" value="1km" />
+                        <Picker.Item label="Tất cả" value="100000" />
+                        <Picker.Item label="Dưới 3 km" value="3000" />
+                        <Picker.Item label="Dưới 2 km" value="2000" />
+                        <Picker.Item label="Dưới 1 km" value="1000" />
                     </Picker>
 
 
-                    <Picker style={{ height: verticalScale(50), width: scale(300) }}
+                    <Picker
                         selectedValue={this.state.linhvuc}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ linhvuc: itemValue })}>
+                        onValueChange={(itemValue, itemIndex) => { this.filterMarkersLinhVuc(itemValue); this.setState({ linhvuc: itemValue }) }}
+                        style={{ height: verticalScale(50), width: scale(300) }}>
                         <Picker.Item label='Tất cả' value='all' />
                         {this.state.listLinhVuc.map((item, index) => (
-                            <Picker.Item label={item.name} value={item.id} key={index} />)
+                            <Picker.Item label={item.name} value={item.id} key={item.id} />)
                         )}
                     </Picker>
 
@@ -189,12 +232,14 @@ class Search extends Component {
 
                 </View>
 
-            </View>
+            </View >
         )
     }
 }
 
 const mapStateToProps = state => ({
-    location: state.location,
+    location: state.location.location,
+    markers: state.markers.markers,
+    listMarkers: state.listMarkers.listMarkers
 });
-export default connect(mapStateToProps, { updateMarkers })(Search);
+export default connect(mapStateToProps, { updateMarkers, updateListMarkers })(Search);
