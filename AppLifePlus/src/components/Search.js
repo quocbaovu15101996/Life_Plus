@@ -60,12 +60,19 @@ class Search extends Component {
                 for (let i = 0; i < responseJson.Data.length; i++) {
                     responseJson.Data[i].distance = this.getDistance(Number(responseJson.Data[i].latitude), Number(responseJson.Data[i].longitude))
                 }
-                this.setState({
-                    linhvuc: 'all',
-                    khoangcach: '100000',
+                // this.setState({
+                //     linhvuc: 'all',
+                //     khoangcach: '100000',
+                // })
+                let data = await responseJson.Data.filter(data => {
+                    if (this.state.linhvuc == 'all') {
+                        return data.distance <= Number(this.state.khoangcach);
+                    }
+                    else
+                    return data.business_line == Number(this.state.linhvuc) && data.distance <= Number(this.state.khoangcach);
                 })
                 this.props.updateListMarkers(responseJson.Data)
-                this.props.updateMarkers(responseJson.Data)
+                this.props.updateMarkers(data)
                 return responseJson;
             }
             else {

@@ -66,7 +66,7 @@ class HomeScreen extends Component {
         for (let i = 0; i < responseJson.Data.length; i++) {
           responseJson.Data[i].distance = this.getDistance(Number(responseJson.Data[i].latitude), Number(responseJson.Data[i].longitude))
         }
-        // console.log('Markers', responseJson.Data)
+        console.log('Markers', responseJson.Data)
         this.props.updateListMarkers(responseJson.Data)
         this.props.updateMarkers(responseJson.Data)
         return responseJson;
