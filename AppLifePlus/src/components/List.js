@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 const win = Dimensions.get("window");
 
 var iconSize = scale(80)
-var titleSize = scale(26)
+var titleSize = scale(34)
 var textConlai = scale(22)
 var khungHeight = verticalScale(140)
 
@@ -25,25 +25,27 @@ class List extends Component {
 
 
   _renderItem = ({ item }) => (
+    <View>
     <TouchableOpacity key={item.id} style={{
-      backgroundColor: 'white', width: '95%', borderBottomColor: 'lightgrey', borderBottomWidth: 1, borderRightColor: 'lightgrey',
-      borderRightWidth: 1, height: khungHeight, flexDirection: "row", marginBottom: 10
+      backgroundColor: 'white', width: '95%', flexDirection: "row", paddingTop: scale(20), paddingBottom: scale(20)
     }} onPress={() => this.props.navigation.navigate('LocationDetail', { id: item.id })} >
       <View style={{ flex: 30, justifyContent: "center", alignItems: "center" }} >
         <Image source={{
           uri:
             item.avatar
-        }} style={{ width: scale(150), height: scale(100) }} />
+        }} style={{ width: scale(170), height: scale(120) }} />
       </View>
 
       <View style={{ flex: 70, justifyContent: "center" }}>
         {/* <Text style={{color: item.isRead ? 'black' : 'grey', fontSize: titleSize}}>{item.title}</Text> */}
         <Text style={{ color: 'black', fontSize: titleSize }}>{item.name}</Text>
         <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.phone_number}</Text>
-        <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.street_address}</Text>
-        <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.business_line_text}</Text>
+        <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.street_address}</Text>
+        <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.business_line_text}</Text>
       </View>
     </TouchableOpacity>
+    <View style={{height: 1, width: '100%', backgroundColor: '#2ced42'}}></View>
+    </View>
   )
 
   render() {
@@ -52,6 +54,7 @@ class List extends Component {
         <Text style={{ color: 'black', fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(10) }}>
           "{this.props.markers.length}" kết quả
         </Text>
+      
         <FlatList
           data={this.props.markers}
           keyExtractor={(item, index) => item.id.toString()}
