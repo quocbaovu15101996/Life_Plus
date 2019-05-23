@@ -14,6 +14,8 @@ import { scale, verticalScale } from "../userControl/Scale";
 import { connect } from 'react-redux';
 import { updateLocation } from '../redux/actions/location';
 import { updateMarkers } from '../redux/actions/listMarker';
+import { updateListMarkers } from '../redux/actions/listMarkerSearch';
+import geolib from 'geolib';
 class HomeScreen extends Component {
   constructor(props) {
     super(props)
@@ -33,12 +35,19 @@ class HomeScreen extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }
-        // this.props.store.dispatch(updateLocation(location))
         this.props.updateLocation(location);
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
     );
+  }
+
+  getDistance(latitudeB, longitudeB) {
+    // console.log('Vị trí B', latitudeB)
+    return geolib.getDistance(this.props.location, {
+      latitude: latitudeB,
+      longitude: longitudeB
+    });
   }
 
   async apiList(string) {
@@ -54,7 +63,11 @@ class HomeScreen extends Component {
       )
       if (response.status == "200") {
         let responseJson = await response.json();
-        // alert(JSON.stringify(responseJson.Data))
+        for (let i = 0; i < responseJson.Data.length; i++) {
+          responseJson.Data[i].distance = this.getDistance(Number(responseJson.Data[i].latitude), Number(responseJson.Data[i].longitude))
+        }
+        // console.log('Markers', responseJson.Data)
+        this.props.updateListMarkers(responseJson.Data)
         this.props.updateMarkers(responseJson.Data)
         return responseJson;
       }
@@ -93,7 +106,7 @@ class HomeScreen extends Component {
                   this.apiList(this.state.textTimKiem);
                   this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
                 }}>
-                <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59)}} />
+                <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59) }} />
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
@@ -111,4 +124,9 @@ class HomeScreen extends Component {
   }
 }
 
-export default connect(null, { updateLocation, updateMarkers })(HomeScreen);
+
+const mapStateToProps = state => ({
+  location: state.location.location,
+});
+
+export default connect(mapStateToProps, { updateLocation, updateMarkers, updateListMarkers })(HomeScreen);

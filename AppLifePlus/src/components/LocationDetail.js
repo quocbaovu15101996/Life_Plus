@@ -60,11 +60,11 @@ export default class LocationDetail extends Component {
                     <ScrollView>
                         <View style={{ margin: scale(10) }}>
                             <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
-                            <TouchableOpacity style={{ position: 'absolute', right: 0, top: 0}}
+                            <TouchableOpacity style={{ position: 'absolute', right: 0, top: 0 }}
                                 onPress={() => this.props.navigation.goBack(null)}
                             >
-                                <View style={{flexDirection: 'row', marginTop: scale(15), marginBottom: scale(15), justifyContent: "center", alignItems: "center"}}>
-                                    <Image source={require('../../images/iconBack.png')} style={{width: scale(50), height: verticalScale(50)}}/>
+                                <View style={{ flexDirection: 'row', marginTop: scale(15), marginBottom: scale(15), justifyContent: "center", alignItems: "center" }}>
+                                    <Image source={require('../../images/iconBack.png')} style={{ width: scale(50), height: verticalScale(50) }} />
                                     <Text style={{ color: 'black', fontSize: scale(28) }}>Back</Text>
 
                                 </View>
@@ -77,7 +77,7 @@ export default class LocationDetail extends Component {
                                         <View>
                                             <Text style={{ color: 'black', fontSize: scale(26), marginLeft: 10 }}>{data.phone_number}</Text>
                                         </View>
-                                        <View style={{marginBottom: 5}}>
+                                        <View style={{ marginBottom: 5 }}>
                                             <Text style={{ color: 'black', fontSize: scale(26), marginLeft: 10 }}>{data.street_address}</Text>
                                         </View>
                                     </View>
@@ -126,7 +126,8 @@ export default class LocationDetail extends Component {
         }
         else
             return (<View>
-                <Text>Loading ...</Text>
+                {this.props.navigation.goBack(null) && alert('Không có dữ liệu')}
+                {/* <Text>Loading ...</Text> */}
             </View>)
     }
 }
