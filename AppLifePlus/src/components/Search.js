@@ -144,7 +144,7 @@ class Search extends Component {
         return (
 
             <View style={{ flex: 1 }}>
-                <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: 'pink', 
+                <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: 'rgb(250,221,202)', 
                 padding: scale(15), marginBottom: scale(20) }}>
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
