@@ -71,8 +71,8 @@ export default class LocationDetail extends Component {
                                 </TouchableOpacity>
                             </View>
 
-                            <View style={{ width: '100%', marginTop: scale(20), justifyContent: "center", alignItems: "center" }}>
-                                <ImageBackground source={{ uri: data.avatar }} style={{ width: '98%', height: win.height / 3 }}>
+                            <View style={{width: win.width, height: win.height / 3, marginTop: scale(20), alignItems: "center" }}>
+                                <ImageBackground source={{ uri: data.avatar }} style={{ width: scale(680), height: win.height / 3 }}>
                                     <View style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(255,255,255, 0.85)', width: '100%' }}>
                                         <Text style={{ color: '#00FF7F', fontSize: scale(32), marginLeft: 10 }}>{data.shop_name}</Text>
 
