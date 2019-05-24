@@ -130,13 +130,13 @@ class Map extends Component {
           }
         </MapView>
         <View style={{ position: 'absolute', left: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.85)', justifyContent: 'center', height: scale(40) }}>
-          <Text style={{ fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(5), marginTop: scale(5), marginRight: scale(5) }}>
+          <Text style={{ fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(5), marginTop: scale(5), marginRight: scale(5), padding: scale(5) }}>
             <Text style={{ color: 'black', fontWeight: '500', fontSize: scale(28), }}>{this.props.markers.length} </Text> kết quả
           </Text>
         </View>
-        <View style={{ position: 'absolute', right: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.8)', }}>
+        <View style={{ position: 'absolute', right: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.8)', padding: scale(10)}}>
           <TouchableOpacity onPress={this._getLocation}>
-            <Image source={require('../../images/iconTargetLocation.png')} style={{ height: scale(40), width: scale(40) }} />
+            <Image source={require('../../images/iconTargetLocation.png')} style={{ height: scale(30), width: scale(30) }} />
           </TouchableOpacity>
         </View>
       </View>
