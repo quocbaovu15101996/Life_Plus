@@ -118,7 +118,7 @@ class HomeScreen extends Component {
 
         <View style={{ flex: 50, alignItems: "center", position: "relative" }}>
           <View style={{ position: "absolute", bottom: 20, alignItems: "center" }}>
-            <Image source={require('../../images/Lifelogo.png')} style={{ width: 100, height: 38 }} />
+            <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38 }} />
             <Text style={{ fontSize: 15, color: 'black' }}>Luôn song hành cùng bạn mọi lúc mọi nơi</Text>
           </View>
         </View>
