@@ -8,17 +8,16 @@ import geolib from 'geolib';
 import { connect } from 'react-redux';
 
 var IconLocation = scale(50);
-var paddingMap = scale(40)
+var paddingMap = scale(50)
 const LATITUDEDELTA = 0.1;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
-const DEFAULT_PADDING = { top: paddingMap, right: paddingMap, bottom: paddingMap, left: paddingMap };
+const DEFAULT_PADDING = { top: paddingMap, right: paddingMap, bottom: paddingMap * 2, left: paddingMap };
 
 class MapGuide extends Component {
     constructor(props) {
         super(props);
         this.map = null;
         this.state = {
-            statusBarHeight: 5,
             distance: 0,
             latitude: null,
             longitude: null,
@@ -72,7 +71,6 @@ class MapGuide extends Component {
         this.mergeLot();
     }
     componentWillMount() {
-        setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
     }
 
     mergeLot() {
@@ -110,19 +108,20 @@ class MapGuide extends Component {
         }
     }
     ZoomBounds() {
-        this.map.fitToCoordinates([
-            {
-                latitude: this.props.location.latitude,
-                longitude: this.props.location.longitude,
-            },
-            {
-                latitude: Number(this.props.marker.latitude),
-                longitude: Number(this.props.marker.longitude),
-            },
-        ], {
-                edgePadding: DEFAULT_PADDING,
-                animated: true
-            });
+        // [
+        //     {
+        //         latitude: this.props.location.latitude,
+        //         longitude: this.props.location.longitude,
+        //     },
+        //     {
+        //         latitude: Number(this.props.marker.latitude),
+        //         longitude: Number(this.props.marker.longitude),
+        //     },
+        // ]
+        this.map.fitToCoordinates(this.state.coords, {
+            edgePadding: DEFAULT_PADDING,
+            animated: true
+        });
     }
     render() {
 
@@ -135,19 +134,19 @@ class MapGuide extends Component {
                         ("Cách " + this.state.distance + " m")
                 }</Text>
                 <View style={{ width: '100%', height: win.height / 1.5 }}>
-                    <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
+                    <View style={{ flex: 1 }}>
                         <MapView style={{ width: '100%', height: '107%' }} region={{
                             latitude: this.state.region.latitude,
                             longitude: this.state.region.longitude,
                             latitudeDelta: LATITUDEDELTA,
                             longitudeDelta: LONGITUDEDELTA
                         }}
-                            showsUserLocation={true}
-                            showsMyLocationButton={true}
+                            // showsUserLocation={true}
+                            // showsMyLocationButton={true}
                             ref={ref => {
                                 this.map = ref;
                             }}
-                            // onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
+                            onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
                         >
 
                             {!!this.props.location.latitude && !!this.props.location.longitude &&

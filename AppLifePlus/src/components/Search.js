@@ -58,7 +58,9 @@ class Search extends Component {
                 let responseJson = await response.json();
 
                 for (let i = 0; i < responseJson.Data.length; i++) {
-                    responseJson.Data[i].distance = this.getDistance(Number(responseJson.Data[i].latitude), Number(responseJson.Data[i].longitude))
+                    responseJson.Data[i].distance = this.getDistance(Number(responseJson.Data[i].latitude), Number(responseJson.Data[i].longitude));
+                    responseJson.Data[i].latitude = Number(responseJson.Data[i].latitude);
+                    responseJson.Data[i].longitude = Number(responseJson.Data[i].longitude)
                 }
                 // this.setState({
                 //     linhvuc: 'all',
@@ -142,7 +144,6 @@ class Search extends Component {
     }
     render() {
         return (
-
             <View style={{ flex: 1 }}>
                 <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: 'rgb(250,221,202)', 
                 padding: scale(15), marginBottom: scale(20) }}>
