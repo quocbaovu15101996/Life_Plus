@@ -15,15 +15,15 @@ import store from '../redux/stores';
 
 const win = Dimensions.get("window");
 var IconLocation = scale(50);
+const padding = scale(60)
 const LATITUDEDELTA = 0.2;
 const LONGITUDEDELTA = LATITUDEDELTA * (win.width / win.height);
-const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
+const DEFAULT_PADDING = { top: padding, right: padding, bottom: padding * 1.5, left: padding };
 class Map extends Component {
   constructor(props) {
     super(props)
     this.map = null;
     this.state = {
-      statusBarHeight: 5,
       region: {
         latitude: 21.013377,
         longitude: 105.7996593
@@ -46,7 +46,6 @@ class Map extends Component {
   }
   componentWillMount() {
     // show button ShowMyLocation in Map
-    setTimeout(() => this.setState({ statusBarHeight: 0 }), 500);
   }
 
   renderMarker(markers) {
@@ -76,33 +75,33 @@ class Map extends Component {
         )
   }
   ZoomBounds() {
-    // let listMarker = this.state.markers;
-    // console.log(listMarker)
-    // listMarker.push()
-    // this.map.fitToCoordinates(this.state.markers, {
-    //   edgePadding: DEFAULT_PADDING,
-    //   animated: true
-    // });
+    let listMarker = this.props.markers;
+    listMarker.push(this.props.location)
+    console.log(listMarker)
+    setTimeout(() => {
+      this.map.fitToCoordinates(this.props.markers, {
+        edgePadding: DEFAULT_PADDING,
+        animated: true
+      });
+    }, 1500)
   }
   render() {
     return (
-      <View style={{ flex: 1, paddingTop: this.state.statusBarHeight }}>
-        <Text style={{ color: 'black', fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(10) }}>
-          "{this.props.markers.length}" kết quả
-        </Text>
+      <View style={{ flex: 1 }}>
         <MapView
           ref={ref => {
             this.map = ref;
           }}
           style={{ width: '100%', height: '107%' }}
           region={{
-            latitude: this.state.region.latitude,
-            longitude: this.state.region.longitude,
+            latitude: this.props.location.latitude,
+            longitude: this.props.location.longitude,
             latitudeDelta: LATITUDEDELTA,
             longitudeDelta: LONGITUDEDELTA
           }}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
+        // showsUserLocation={true}
+        // showsMyLocationButton={true}
+        // onMapReady={() =>this.ZoomBounds()}
         >
           {!!this.props.location.latitude && !!this.props.location.longitude &&
             <Marker
@@ -119,6 +118,16 @@ class Map extends Component {
             this.renderMarker(this.props.markers)
           }
         </MapView>
+        <View style={{ position: 'absolute', left: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.85)', justifyContent: 'center', height: scale(40) }}>
+          <Text style={{fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(5), marginTop: scale(5), marginRight: scale(5)}}>
+          <Text style={{color: 'black', fontWeight: '500',fontSize: scale(28),}}>{this.props.markers.length} </Text> kết quả
+          </Text>
+        </View>
+        <View style={{ position: 'absolute', right: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.8)', }}>
+          <TouchableOpacity onPress={() => this.setState({ latitude: this.props.location.latitude, longitude: this.props.location.longitude })}>
+            <Image source={require('../../images/iconTargetLocation.png')} style={{ height: scale(40), width: scale(40) }} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

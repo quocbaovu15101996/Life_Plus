@@ -58,8 +58,8 @@ export default class LocationDetail extends Component {
             return (
                 <View style={{ flex: 1 }}>
                     <ScrollView>
-                        <View style={{  }}>
-                            <View style={{width: '100%', paddingTop: scale(15), paddingBottom: scale(15), backgroundColor: 'rgb(250,221,202)', justifyContent: "center"}}>
+                        <View style={{}}>
+                            <View style={{ width: '100%', paddingTop: scale(15), paddingBottom: scale(15), backgroundColor: 'rgb(250,221,202)', justifyContent: "center" }}>
                                 <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginLeft: 10 }} />
                                 <TouchableOpacity style={{ position: 'absolute', right: 10 }}
                                     onPress={() => this.props.navigation.goBack(null)}
@@ -67,18 +67,18 @@ export default class LocationDetail extends Component {
                                     <View style={{ flexDirection: 'row', justifyContent: "center", alignItems: "center" }}>
                                         <Image source={require('../../images/iconBack.png')} style={{ width: scale(50), height: verticalScale(50) }} />
                                         <Text style={{ color: 'black', fontSize: scale(28) }}>Back</Text>
-
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                            
+
                             <View style={{ width: '100%', marginTop: scale(20), justifyContent: "center", alignItems: "center" }}>
-                                <ImageBackground source={{ uri: data.avatar }} style={{ width: '98%', height: win.height / 2 }}>
-                                    <View style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(255,255,255, 0.15)', width: '100%' }}>
+                                <ImageBackground source={{ uri: data.avatar }} style={{ width: '98%', height: win.height / 3 }}>
+                                    <View style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(255,255,255, 0.85)', width: '100%' }}>
                                         <Text style={{ color: '#00FF7F', fontSize: scale(32), marginLeft: 10 }}>{data.shop_name}</Text>
+
                                         <View>
-                                            <Text onPress={() => {Linking.openURL(`tel:${data.phone_number}`)}} 
-                                            style={{ color: 'blue', fontSize: scale(26), marginLeft: 10 }}>{data.phone_number}</Text>
+                                            <Text onPress={() => { Linking.openURL(`tel:${data.phone_number}`) }}
+                                                style={{ color: 'blue', fontSize: scale(26), marginLeft: 10 }}>{data.phone_number}</Text>
                                         </View>
                                         <View style={{ marginBottom: 5 }}>
                                             <Text style={{ color: 'black', fontSize: scale(26), marginLeft: 10 }}>{data.street_address}</Text>
@@ -121,7 +121,6 @@ export default class LocationDetail extends Component {
                                 <MapGuide marker={data} />
                             )
                             }
-
                         </View>
                     </ScrollView>
                 </View>
