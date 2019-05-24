@@ -85,6 +85,17 @@ class Map extends Component {
       });
     }, 1500)
   }
+  _getLocation = async () => {
+    await navigator.geolocation.getCurrentPosition(position => {
+      const region = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        latitudeDelta: LATITUDEDELTA,
+        longitudeDelta: LONGITUDEDELTA
+      };
+      this.map.animateToRegion(region, 500);
+    });
+  };
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -119,12 +130,12 @@ class Map extends Component {
           }
         </MapView>
         <View style={{ position: 'absolute', left: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.85)', justifyContent: 'center', height: scale(40) }}>
-          <Text style={{fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(5), marginTop: scale(5), marginRight: scale(5)}}>
-          <Text style={{color: 'black', fontWeight: '500',fontSize: scale(28),}}>{this.props.markers.length} </Text> kết quả
+          <Text style={{ fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(5), marginTop: scale(5), marginRight: scale(5) }}>
+            <Text style={{ color: 'black', fontWeight: '500', fontSize: scale(28), }}>{this.props.markers.length} </Text> kết quả
           </Text>
         </View>
         <View style={{ position: 'absolute', right: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.8)', }}>
-          <TouchableOpacity onPress={() => this.setState({ latitude: this.props.location.latitude, longitude: this.props.location.longitude })}>
+          <TouchableOpacity onPress={this._getLocation}>
             <Image source={require('../../images/iconTargetLocation.png')} style={{ height: scale(40), width: scale(40) }} />
           </TouchableOpacity>
         </View>

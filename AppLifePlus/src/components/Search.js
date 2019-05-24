@@ -170,7 +170,7 @@ class Search extends Component {
                 </View>
                 </View>
 
-                <View style={{ height: scale(80), flexDirection: "row" }}>
+                <View style={{ height: scale(60), flexDirection: "row" }}>
                     <Picker
                         selectedValue={this.state.khoangcach}
                         onValueChange={(itemValue, itemIndex) => { this.filterMarkersDistance(itemValue); this.setState({ khoangcach: itemValue }) }}
