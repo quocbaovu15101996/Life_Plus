@@ -39,19 +39,19 @@ class List extends Component {
       </View>
 
       <View style={{ flex: 60, justifyContent: "center" }}>
-        <Text style={{ color: 'black', fontSize: titleSize, marginBottom: scale(10) }}>{item.name}</Text>
-        <View style={{flexDirection: "row", alignItems: "center", marginBottom: scale(10)}}>
-          <Icon name='ios-call' style={{width: scale(40), height: scale(55), marginRight: scale(10)}} />
+        <Text style={{ color: 'black', fontSize: titleSize, marginBottom: scale(5) }}>{item.name}</Text>
+        <View style={{flexDirection: "row", alignItems: "center", marginBottom: scale(5)}}>
+          <Icon name='ios-call' style={{fontSize: scale(40), color: '#444444', marginRight: scale(10)}} />
           <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.phone_number}</Text>
         </View>
 
-        <View style={{flexDirection: "row", alignItems: "center", marginBottom: scale(10)}}>
-          <Icon name='pin' style={{width: scale(40), height: scale(55), marginRight: scale(10)}} />
+        <View style={{flexDirection: "row", alignItems: "center", marginBottom: scale(5)}}>
+          <Icon name='pin' style={{fontSize: scale(40), color: '#444444', marginRight: scale(10)}} />
           <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.street_address}</Text>
         </View>
         
         <View style={{flexDirection: "row", alignItems: "center"}}>
-          <Icon name='ios-cart' style={{width: scale(40), height: scale(55), marginRight: scale(10)}} />
+          <Icon name='ios-cart' style={{fontSize: scale(40), color: '#444444', marginRight: scale(10)}} />
           <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.business_line_text}</Text>
         </View>
         

@@ -150,7 +150,7 @@ class Search extends Component {
                 <View style={{ height: scale(80), flexDirection: "row" }}>
                     <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
 
-                    <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%', marginTop: scale(5) }}>
+                    <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
                         <TextInput
                             style={{ flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: scale(10), 
                             borderBottomLeftRadius: scale(10), borderRightWidth: 0, backgroundColor: 'white', paddingLeft: scale(10) }}
