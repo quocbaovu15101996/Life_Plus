@@ -8,14 +8,15 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, FlatList } from 'react-native';
+import {Icon} from 'native-base'
 import { scale, verticalScale } from "../userControl/Scale";
 import { connect } from 'react-redux';
 
 const win = Dimensions.get("window");
 
 var iconSize = scale(80)
-var titleSize = scale(34)
-var textConlai = scale(22)
+var titleSize = scale(38)
+var textConlai = scale(28)
 var khungHeight = verticalScale(140)
 
 class List extends Component {
@@ -26,41 +27,54 @@ class List extends Component {
 
   _renderItem = ({ item }) => (
     <View>
+    <View style={{height: 1, width: '100%', backgroundColor: 'rgb(169,209,142)'}}></View>
     <TouchableOpacity key={item.id} style={{
-      backgroundColor: 'white', width: '95%', flexDirection: "row", paddingTop: scale(20), paddingBottom: scale(20)
+      backgroundColor: 'white', width: '95%', flexDirection: "row", paddingTop: scale(15), paddingBottom: scale(15)
     }} onPress={() => this.props.navigation.navigate('LocationDetail', { id: item.id })} >
-      <View style={{ flex: 30, justifyContent: "center", alignItems: "center" }} >
+      <View style={{ flex: 35, justifyContent: "center", alignItems: "center" }} >
         <Image source={{
           uri:
             item.avatar
-        }} style={{ width: scale(170), height: scale(120) }} />
+        }} style={{ width: scale(210), height: scale(160) }} />
       </View>
 
-      <View style={{ flex: 70, justifyContent: "center" }}>
-        {/* <Text style={{color: item.isRead ? 'black' : 'grey', fontSize: titleSize}}>{item.title}</Text> */}
-        <Text style={{ color: 'black', fontSize: titleSize }}>{item.name}</Text>
-        <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.phone_number}</Text>
-        <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.street_address}</Text>
-        <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.business_line_text}</Text>
+      <View style={{ flex: 60, justifyContent: "center" }}>
+        <Text style={{ color: 'black', fontSize: titleSize, marginBottom: scale(10) }}>{item.name}</Text>
+        <View style={{flexDirection: "row", alignItems: "center", marginBottom: scale(10)}}>
+          <Icon name='ios-call' style={{width: scale(35), height: scale(45), marginRight: scale(10)}} />
+          <Text style={{ fontSize: textConlai, color: 'grey' }} >{item.phone_number}</Text>
+        </View>
+
+        <View style={{flexDirection: "row", alignItems: "center", marginBottom: scale(10)}}>
+          <Icon name='pin' style={{width: scale(35), height: scale(45), marginRight: scale(10)}} />
+          <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.street_address}</Text>
+        </View>
+        
+        <View style={{flexDirection: "row", alignItems: "center"}}>
+          <Icon name='ios-cart' style={{width: scale(35), height: scale(45), marginRight: scale(10)}} />
+          <Text style={{ fontSize: textConlai, color: 'grey' }} numberOfLines={1} >{item.business_line_text}</Text>
+        </View>
+        
       </View>
+      <View style={{flex: 5}}></View>
     </TouchableOpacity>
-    <View style={{height: 1, width: '100%', backgroundColor: '#2ced42'}}></View>
     </View>
   )
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View>
         <Text style={{ color: 'black', fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(10) }}>
           "{this.props.markers.length}" kết quả
         </Text>
-      
+        
         <FlatList
           data={this.props.markers}
           keyExtractor={(item, index) => item.id.toString()}
           renderItem={this._renderItem}
           numColumns={1}
         />
+        <View style={{height: 1, width: '100%', backgroundColor: 'rgb(169,209,142)'}}></View>
       </View>
     );
   }
