@@ -159,6 +159,8 @@ class Search extends Component {
                                 this.setState({ textTimKiem: text })
                             }}
                             value={this.state.textTimKiem}
+                            returnKeyType='search'
+                            onSubmitEditing={() => this.apiList(this.state.textTimKiem)}
                         />
 
                         <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: scale(10), borderBottomRightRadius: scale(10) }}

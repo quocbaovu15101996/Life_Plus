@@ -103,10 +103,13 @@ class HomeScreen extends Component {
                   this.setState({ textTimKiem: text })
                 }}
                 value={this.state.textTimKiem}
+                returnKeyType='search'
+                onSubmitEditing={() => this.apiList(this.state.textTimKiem) && 
+                this.props.navigation.navigate('Search', { text: this.state.textTimKiem })}
               />
               <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
                 onPress={() => {
-                  this.apiList(this.state.textTimKiem);
+                  this.apiList(this.state.textTimKiem) &&
                   this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
                 }}>
                 <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59) }} />
