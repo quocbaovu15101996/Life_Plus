@@ -124,7 +124,7 @@ class MapGuide extends Component {
             });
         }
         else
-        console.log('this.map == null')
+        console.log('this.map == null`')
 }
 render() {
 
@@ -154,7 +154,6 @@ render() {
                         }}
                         onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
                     >
-
                         {!!this.props.location.latitude && !!this.props.location.longitude &&
                             <Marker
                                 coordinate={{ "latitude": this.props.location.latitude, "longitude": this.props.location.longitude }}

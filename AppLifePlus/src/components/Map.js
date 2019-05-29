@@ -98,47 +98,50 @@ class Map extends Component {
   };
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <MapView
-          ref={ref => {
-            this.map = ref;
-          }}
-          style={{ width: '100%', height: '107%' }}
-          region={{
-            latitude: this.props.location.latitude,
-            longitude: this.props.location.longitude,
-            latitudeDelta: LATITUDEDELTA,
-            longitudeDelta: LONGITUDEDELTA
-          }}
-        // showsUserLocation={true}
-        // showsMyLocationButton={true}
-        // onMapReady={() =>this.ZoomBounds()}
-        >
-          {!!this.props.location.latitude && !!this.props.location.longitude &&
-            <Marker
-              coordinate={{ "latitude": this.props.location.latitude, "longitude": this.props.location.longitude }}
-              title={"Your Location"}
-            >
-              <Image
-                source={require('../../images/iconLocationUser.png')}
-                style={{ height: IconLocation + scale(10), width: IconLocation }}
-              />
-            </Marker>
-          }
-          {
-            this.renderMarker(this.props.markers)
-          }
-        </MapView>
-        <View style={{ position: 'absolute', left: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.85)', justifyContent: 'center', height: scale(40) }}>
-          <Text style={{ fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(5), marginTop: scale(5), marginRight: scale(5), padding: scale(5) }}>
-            <Text style={{ color: 'black', fontWeight: '500', fontSize: scale(28), }}>{this.props.markers.length} </Text> kết quả
+      <View style={{ flex: 1, paddingTop: scale(10) }}>
+        <View style={{ flex: 1 }}>
+          <MapView
+            ref={ref => {
+              this.map = ref;
+            }}
+            style={{ width: '100%', height: '107%' }}
+            region={{
+              latitude: this.props.location.latitude,
+              longitude: this.props.location.longitude,
+              latitudeDelta: LATITUDEDELTA,
+              longitudeDelta: LONGITUDEDELTA
+            }}
+          // showsUserLocation={true}
+          // showsMyLocationButton={true}
+          // onMapReady={() =>this.ZoomBounds()}
+          >
+            {!!this.props.location.latitude && !!this.props.location.longitude &&
+              <Marker
+                coordinate={{ "latitude": this.props.location.latitude, "longitude": this.props.location.longitude }}
+                title={"Your Location"}
+              >
+                <Image
+                  source={require('../../images/iconLocationUser.png')}
+                  style={{ height: IconLocation + scale(10), width: IconLocation }}
+                />
+              </Marker>
+            }
+            {
+              this.renderMarker(this.props.markers)
+            }
+          </MapView>
+          <View style={{ position: 'absolute', left: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.85)', justifyContent: 'center', height: scale(40) }}>
+            <Text style={{ fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(5), marginTop: scale(5), marginRight: scale(5), padding: scale(5) }}>
+              <Text style={{ color: 'black', fontWeight: '500', fontSize: scale(28), }}>{this.props.markers.length} </Text> kết quả
           </Text>
-        </View>
-        <View style={{ position: 'absolute', right: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.8)', padding: scale(10)}}>
-          <TouchableOpacity onPress={this._getLocation}>
+          </View>
+          <TouchableOpacity onPress={this._getLocation} hitSlop={{ top: scale(15), bottom: scale(15), left: scale(15), right: scale(15) }}
+            style={{ position: 'absolute', right: scale(15), top: scale(15), backgroundColor: 'rgba(255,255,255, 0.8)', padding: scale(10) }}
+          >
             <Image source={require('../../images/iconTargetLocation.png')} style={{ height: scale(30), width: scale(30) }} />
           </TouchableOpacity>
         </View>
+
       </View>
     );
   }
