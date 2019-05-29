@@ -84,7 +84,6 @@ class MapGuide extends Component {
                 this.getDirections(concatLot, des);
             });
         }
-
     }
 
     async getDirections(startLoc, destinationLoc) {
@@ -118,84 +117,88 @@ class MapGuide extends Component {
         //         longitude: Number(this.props.marker.longitude),
         //     },
         // ]
-        this.map.fitToCoordinates(this.state.coords, {
-            edgePadding: DEFAULT_PADDING,
-            animated: true
-        });
-    }
-    render() {
+        if (this.map != null) {
+            this.map.fitToCoordinates(this.state.coords, {
+                edgePadding: DEFAULT_PADDING,
+                animated: true
+            });
+        }
+        else
+        console.log('this.map == null')
+}
+render() {
 
-        return (
-            <View style={{ width: '100%', marginTop: scale(20) }}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image source={require('../../images/iconFindWay.png')} style={{ height: scale(50), width: scale(50) }} />
-                    <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
-                </View>
-                <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>{
-                    this.state.distance / 1000 > 1 ?
-                        ("Cách " + (this.state.distance / 1000).toFixed(2) + " km") :
-                        ("Cách " + this.state.distance + " m")
-                }</Text>
-                <View style={{ width: '100%', height: win.height / 1.5 }}>
-                    <View style={{ flex: 1 }}>
-                        <MapView style={{ width: '100%', height: '107%' }} region={{
-                            latitude: this.state.region.latitude,
-                            longitude: this.state.region.longitude,
-                            latitudeDelta: LATITUDEDELTA,
-                            longitudeDelta: LONGITUDEDELTA
+    return (
+        <View style={{ width: '100%', marginTop: scale(20) }}>
+            <View style={{ flexDirection: 'row' }}>
+                <Image source={require('../../images/iconFindWay.png')} style={{ height: scale(50), width: scale(50) }} />
+                <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
+            </View>
+            <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>{
+                this.state.distance / 1000 > 1 ?
+                    ("Cách " + (this.state.distance / 1000).toFixed(2) + " km") :
+                    ("Cách " + this.state.distance + " m")
+            }</Text>
+            <View style={{ width: '100%', height: win.height / 1.5 }}>
+                <View style={{ flex: 1 }}>
+                    <MapView style={{ width: '100%', height: '107%' }} region={{
+                        latitude: this.state.region.latitude,
+                        longitude: this.state.region.longitude,
+                        latitudeDelta: LATITUDEDELTA,
+                        longitudeDelta: LONGITUDEDELTA
+                    }}
+                        // showsUserLocation={true}
+                        // showsMyLocationButton={true}
+                        ref={ref => {
+                            this.map = ref;
                         }}
-                            // showsUserLocation={true}
-                            // showsMyLocationButton={true}
-                            ref={ref => {
-                                this.map = ref;
-                            }}
-                            onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
-                        >
+                        onMapReady={() => setTimeout(() => this.ZoomBounds(), 1500)}
+                    >
 
-                            {!!this.props.location.latitude && !!this.props.location.longitude &&
-                                <Marker
-                                    coordinate={{ "latitude": this.props.location.latitude, "longitude": this.props.location.longitude }}
-                                    title={"Your Location"}
-                                >
-                                    <Image
-                                        source={require('../../images/iconLocationUser.png')}
-                                        style={{ height: IconLocation + scale(10), width: IconLocation }}
-                                    />
-                                </Marker>
-                            }
-
-                            {!!this.state.cordLatitude && !!this.state.cordLongitude && <Marker
-                                coordinate={{ "latitude": this.state.cordLatitude, "longitude": this.state.cordLongitude }}
-                                title={"Your Destination"}
+                        {!!this.props.location.latitude && !!this.props.location.longitude &&
+                            <Marker
+                                coordinate={{ "latitude": this.props.location.latitude, "longitude": this.props.location.longitude }}
+                                title={"Your Location"}
                             >
                                 <Image
-                                    source={require('../../images/iconMarker.png')}
-                                    style={{ height: IconLocation, width: IconLocation }}
+                                    source={require('../../images/iconLocationUser.png')}
+                                    style={{ height: IconLocation + scale(10), width: IconLocation }}
                                 />
                             </Marker>
-                            }
+                        }
 
-                            {!!this.props.location.latitude && !!this.props.location.longitude && this.state.x == 'true' && <MapView.Polyline
-                                coordinates={this.state.coords}
-                                strokeWidth={2}
-                                strokeColor="red" />
-                            }
+                        {!!this.state.cordLatitude && !!this.state.cordLongitude && <Marker
+                            coordinate={{ "latitude": this.state.cordLatitude, "longitude": this.state.cordLongitude }}
+                            title={"Your Destination"}
+                        >
+                            <Image
+                                source={require('../../images/iconMarker.png')}
+                                style={{ height: IconLocation, width: IconLocation }}
+                            />
+                        </Marker>
+                        }
 
-                            {!!this.props.location.latitude && !!this.props.location.longitude && this.state.x == 'error' && <MapView.Polyline
-                                coordinates={[
-                                    { latitude: this.props.location.latitude, longitude: this.props.location.longitude },
-                                    { latitude: this.state.cordLatitude, longitude: this.state.cordLongitude },
-                                ]}
-                                strokeWidth={2}
-                                strokeColor="red" />
-                            }
-                        </MapView>
-                    </View>
+                        {!!this.props.location.latitude && !!this.props.location.longitude && this.state.x == 'true' && <MapView.Polyline
+                            coordinates={this.state.coords}
+                            strokeWidth={2}
+                            strokeColor="red" />
+                        }
+
+                        {!!this.props.location.latitude && !!this.props.location.longitude && this.state.x == 'error' && <MapView.Polyline
+                            coordinates={[
+                                { latitude: this.props.location.latitude, longitude: this.props.location.longitude },
+                                { latitude: this.state.cordLatitude, longitude: this.state.cordLongitude },
+                            ]}
+                            strokeWidth={2}
+                            strokeColor="red" />
+                        }
+                    </MapView>
                 </View>
             </View>
+        </View>
 
-        );
-    }
+    );
+}
 }
 
 const styles = StyleSheet.create({
