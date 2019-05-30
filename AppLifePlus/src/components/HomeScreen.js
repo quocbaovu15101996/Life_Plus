@@ -68,9 +68,15 @@ class HomeScreen extends Component {
           responseJson.Data[i].latitude = Number(responseJson.Data[i].latitude);
           responseJson.Data[i].longitude = Number(responseJson.Data[i].longitude)
         }
-        // console.log('Markers', responseJson.Data)
+        await responseJson.Data.sort(function (a, b) {
+          return a.distance - b.distance;
+        });
+        let data = await responseJson.Data.filter(data => {
+          return data.distance <= 100000;
+        })
+        console.log('Markers Data', data)
         this.props.updateListMarkers(responseJson.Data)
-        this.props.updateMarkers(responseJson.Data)
+        this.props.updateMarkers(data)
         return responseJson;
       }
       else {
@@ -96,21 +102,23 @@ class HomeScreen extends Component {
           <KeyboardAvoidingView behavior='padding'>
             <View style={{ flex: 1, flexDirection: 'row', width: '90%' }}>
               <TextInput
-                style={{ flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, 
-                borderRightWidth: 0, paddingLeft: scale(10) }}
+                style={{
+                  flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: 10, borderBottomLeftRadius: 10,
+                  borderRightWidth: 0, paddingLeft: scale(10)
+                }}
                 placeholder='Nhập tìm kiếm'
                 onChangeText={(text) => {
                   this.setState({ textTimKiem: text })
                 }}
                 value={this.state.textTimKiem}
                 returnKeyType='search'
-                onSubmitEditing={() => this.apiList(this.state.textTimKiem) && 
-                this.props.navigation.navigate('Search', { text: this.state.textTimKiem })}
+                onSubmitEditing={() => this.apiList(this.state.textTimKiem) &&
+                  this.props.navigation.navigate('Search', { text: this.state.textTimKiem })}
               />
               <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
                 onPress={() => {
                   this.apiList(this.state.textTimKiem) &&
-                  this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
+                    this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
                 }}>
                 <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59) }} />
               </TouchableOpacity>

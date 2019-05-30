@@ -62,16 +62,15 @@ class Search extends Component {
                     responseJson.Data[i].latitude = Number(responseJson.Data[i].latitude);
                     responseJson.Data[i].longitude = Number(responseJson.Data[i].longitude)
                 }
-                // this.setState({
-                //     linhvuc: 'all',
-                //     khoangcach: '100000',
-                // })
+                await responseJson.Data.sort(function (a, b) {
+                    return a.distance - b.distance;
+                });
                 let data = await responseJson.Data.filter(data => {
                     if (this.state.linhvuc == 'all') {
                         return data.distance <= Number(this.state.khoangcach);
                     }
                     else
-                    return data.business_line == Number(this.state.linhvuc) && data.distance <= Number(this.state.khoangcach);
+                        return data.business_line == Number(this.state.linhvuc) && data.distance <= Number(this.state.khoangcach);
                 })
                 this.props.updateListMarkers(responseJson.Data)
                 this.props.updateMarkers(data)
@@ -145,31 +144,35 @@ class Search extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: 'rgb(250,221,202)', 
-                padding: scale(15), marginBottom: scale(20) }}>
-                <View style={{ height: scale(80), flexDirection: "row" }}>
-                    <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
+                <View style={{
+                    justifyContent: "center", alignItems: "center", backgroundColor: 'rgb(250,221,202)',
+                    padding: scale(15), marginBottom: scale(20)
+                }}>
+                    <View style={{ height: scale(80), flexDirection: "row" }}>
+                        <Image source={require('../../images/Lifelogo.png')} style={{ width: 98, height: 38, marginRight: 5 }} />
 
-                    <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
-                        <TextInput
-                            style={{ flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: scale(10), 
-                            borderBottomLeftRadius: scale(10), borderRightWidth: 0, backgroundColor: 'white', paddingLeft: scale(10) }}
-                            placeholder='Nhập tìm kiếm'
-                            onChangeText={(text) => {
-                                this.setState({ textTimKiem: text })
-                            }}
-                            value={this.state.textTimKiem}
-                            returnKeyType='search'
-                            onSubmitEditing={() => this.apiList(this.state.textTimKiem)}
-                        />
+                        <View style={{ flex: 1, flexDirection: 'row', height: 40, width: '100%' }}>
+                            <TextInput
+                                style={{
+                                    flex: 85, borderWidth: 1, borderColor: 'gray', borderTopLeftRadius: scale(10),
+                                    borderBottomLeftRadius: scale(10), borderRightWidth: 0, backgroundColor: 'white', paddingLeft: scale(10)
+                                }}
+                                placeholder='Nhập tìm kiếm'
+                                onChangeText={(text) => {
+                                    this.setState({ textTimKiem: text })
+                                }}
+                                value={this.state.textTimKiem}
+                                returnKeyType='search'
+                                onSubmitEditing={() => this.apiList(this.state.textTimKiem)}
+                            />
 
-                        <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: scale(10), borderBottomRightRadius: scale(10) }}
-                            onPress={() => this.apiList(this.state.textTimKiem)}
-                        >
-                            <Image source={require('../../images/search.png')} style={{ width: scale(40), height: scale(40) }} />
-                        </TouchableOpacity>
+                            <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: scale(10), borderBottomRightRadius: scale(10) }}
+                                onPress={() => this.apiList(this.state.textTimKiem)}
+                            >
+                                <Image source={require('../../images/search.png')} style={{ width: scale(40), height: scale(40) }} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
                 </View>
 
                 <View style={{ height: scale(60), flexDirection: "row" }}>
