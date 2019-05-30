@@ -62,9 +62,11 @@ class Search extends Component {
                     responseJson.Data[i].latitude = Number(responseJson.Data[i].latitude);
                     responseJson.Data[i].longitude = Number(responseJson.Data[i].longitude)
                 }
+                //sắp xếp theo thứ tự khoảng cách
                 await responseJson.Data.sort(function (a, b) {
                     return a.distance - b.distance;
                 });
+                // lọc theo lựa chọn
                 let data = await responseJson.Data.filter(data => {
                     if (this.state.linhvuc == 'all') {
                         return data.distance <= Number(this.state.khoangcach);
