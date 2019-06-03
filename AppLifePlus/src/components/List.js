@@ -67,6 +67,7 @@ class List extends Component {
         <Text style={{ color: 'black', fontSize: scale(24), marginBottom: verticalScale(10), marginLeft: scale(10) }}>
           "{this.props.markers.length}" kết quả
         </Text>
+        {console.log('Data List screen', this.props.markers)}
         {/* <View> */}
           <FlatList
             data={this.props.markers}

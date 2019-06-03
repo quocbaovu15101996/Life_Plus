@@ -6,8 +6,8 @@ import { UPDATE_LOCATION } from '../actions/location';
 
 const initialState = {
   location: {
-    latitude: 21.159187,
-    longitude: 106.064988
+    latitude: 21.0227788,
+    longitude: 105.8194541
   },
 };
 

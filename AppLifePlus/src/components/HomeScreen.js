@@ -8,7 +8,8 @@ import React, { Component } from 'react';
 import {
   Image,
   Text,
-  View, TextInput, TouchableOpacity, KeyboardAvoidingView
+  View, TextInput, TouchableOpacity, KeyboardAvoidingView,
+  Alert
 } from 'react-native';
 import { scale, verticalScale } from "../userControl/Scale";
 import { connect } from 'react-redux';
@@ -16,6 +17,9 @@ import { updateLocation } from '../redux/actions/location';
 import { updateMarkers } from '../redux/actions/listMarker';
 import { updateListMarkers } from '../redux/actions/listMarkerSearch';
 import geolib from 'geolib';
+
+
+
 class HomeScreen extends Component {
   constructor(props) {
     super(props)
@@ -28,6 +32,7 @@ class HomeScreen extends Component {
     header: null,
   };
 
+  
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -40,6 +45,7 @@ class HomeScreen extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
     );
+
   }
 
   getDistance(latitudeB, longitudeB) {
@@ -49,7 +55,6 @@ class HomeScreen extends Component {
       longitude: longitudeB
     });
   }
-
   async apiList(string) {
     let url = 'https://lifefriend.vn/api/shop/search' + '?' + 'search_content' + '=' + string
     try {
@@ -74,8 +79,10 @@ class HomeScreen extends Component {
         let data = await responseJson.Data.filter(data => {
           return data.distance <= 100000;
         })
-        console.log('Markers Data', data)
+        // console.log('Markers Data', data)
+        //list marker để đối chiếu
         this.props.updateListMarkers(responseJson.Data)
+        // list marker để chỉnh sửa thay đổi
         this.props.updateMarkers(data)
         return responseJson;
       }
@@ -89,6 +96,12 @@ class HomeScreen extends Component {
     }
   }
 
+  _onPressSearch = () => {
+    // if (this.checkNetWorking()) {
+    this.apiList(this.state.textTimKiem)
+    // }
+    this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -112,14 +125,10 @@ class HomeScreen extends Component {
                 }}
                 value={this.state.textTimKiem}
                 returnKeyType='search'
-                onSubmitEditing={() => this.apiList(this.state.textTimKiem) &&
-                  this.props.navigation.navigate('Search', { text: this.state.textTimKiem })}
+                onSubmitEditing={this._onPressSearch}
               />
               <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
-                onPress={() => {
-                  this.apiList(this.state.textTimKiem) &&
-                    this.props.navigation.navigate('Search', { text: this.state.textTimKiem })
-                }}>
+                onPress={this._onPressSearch}>
                 <Image source={require('../../images/search.png')} style={{ width: scale(60), height: scale(59) }} />
               </TouchableOpacity>
             </View>

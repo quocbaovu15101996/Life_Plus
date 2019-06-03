@@ -134,6 +134,7 @@ class MapGuide extends Component {
                     <Image source={require('../../images/iconFindWay.png')} style={{ height: scale(50), width: scale(50) }} />
                     <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30) }}>Chỉ đường</Text>
                 </View>
+                {/* {alert(this.state.distance)} */}
                 <Text style={{ color: 'black', marginLeft: 5, fontWeight: '500', fontSize: scale(30), position: 'absolute', right: 10 }}>{
                     this.state.distance / 1000 > 1 ?
                         ("Cách " + (this.state.distance / 1000).toFixed(2) + " km") :

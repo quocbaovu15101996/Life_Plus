@@ -6,8 +6,15 @@ import { connect } from 'react-redux';
 import { scale, verticalScale } from '../userControl/Scale';
 import { updateMarkers } from '../redux/actions/listMarker';
 import { updateListMarkers } from '../redux/actions/listMarkerSearch';
-
+import NetInfo from "@react-native-community/netinfo";
 import geolib from 'geolib';
+
+const unsubscribe = NetInfo.addEventListener(state => {
+    // console.log("Connection type", state.type);
+    // console.log("Is connected?", state.isConnected);
+    if(!state.isConnected)
+    alert('Bạn chưa kết nối Internet!')
+});
 
 class Search extends Component {
     constructor(props) {
@@ -28,6 +35,7 @@ class Search extends Component {
         //alert(JSON.stringify(this.props.location))
         this.apiGetListLinhVuc()
         // setTimeout(() => alert(JSON.stringify(this.props.listMarkers)), 2000)
+        unsubscribe();
     }
 
     changeTab(index) {
@@ -66,7 +74,7 @@ class Search extends Component {
                 await responseJson.Data.sort(function (a, b) {
                     return a.distance - b.distance;
                 });
-                // lọc theo lựa chọn
+                // lọc theo lựa chọn\
                 let data = await responseJson.Data.filter(data => {
                     if (this.state.linhvuc == 'all') {
                         return data.distance <= Number(this.state.khoangcach);
@@ -143,6 +151,13 @@ class Search extends Component {
         });
         this.props.updateMarkers(listMarkers)
     }
+    btnSearch(string) {
+        if (this.state.listLinhVuc.length < 2) {
+            // alert('call api get list')
+            this.apiGetListLinhVuc()
+        }
+        this.apiList(string)
+    }
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -165,11 +180,11 @@ class Search extends Component {
                                 }}
                                 value={this.state.textTimKiem}
                                 returnKeyType='search'
-                                onSubmitEditing={() => this.apiList(this.state.textTimKiem)}
+                                onSubmitEditing={() => this.btnSearch(this.state.textTimKiem)}
                             />
 
                             <TouchableOpacity style={{ flex: 15, backgroundColor: 'green', justifyContent: "center", alignItems: "center", borderTopRightRadius: scale(10), borderBottomRightRadius: scale(10) }}
-                                onPress={() => this.apiList(this.state.textTimKiem)}
+                                onPress={() => this.btnSearch(this.state.textTimKiem)}
                             >
                                 <Image source={require('../../images/search.png')} style={{ width: scale(40), height: scale(40) }} />
                             </TouchableOpacity>
@@ -188,16 +203,23 @@ class Search extends Component {
                         <Picker.Item label="Dưới 1 km" value="1000" />
                     </Picker>
 
-
-                    <Picker
-                        selectedValue={this.state.linhvuc}
-                        onValueChange={(itemValue, itemIndex) => { this.filterMarkersLinhVuc(itemValue); this.setState({ linhvuc: itemValue }) }}
-                        style={{ height: verticalScale(50), width: scale(300) }}>
-                        <Picker.Item label='Tất cả' value='all' />
-                        {this.state.listLinhVuc.map((item, index) => (
-                            <Picker.Item label={item.name} value={item.id} key={item.id} />)
-                        )}
-                    </Picker>
+                    {
+                        this.state.listLinhVuc.length < 1 ?
+                            (
+                                null
+                            ) :
+                            (
+                                <Picker
+                                    selectedValue={this.state.linhvuc}
+                                    onValueChange={(itemValue, itemIndex) => { this.filterMarkersLinhVuc(itemValue); this.setState({ linhvuc: itemValue }) }}
+                                    style={{ height: verticalScale(50), width: scale(300) }}>
+                                    <Picker.Item label='Tất cả' value='all' />
+                                    {this.state.listLinhVuc.map((item, index) => (
+                                        <Picker.Item label={item.name} value={item.id} key={item.id} />)
+                                    )}
+                                </Picker>
+                            )
+                    }
 
                     <View style={{ flexDirection: 'row', position: 'absolute', right: 8 }}>
                         <TouchableOpacity style={{
